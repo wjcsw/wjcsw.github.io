@@ -1,0 +1,1673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://wjcsw.github.io</id>
+    <title>想见山海</title>
+    <updated>2023-07-14T09:52:07.739Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://wjcsw.github.io"/>
+    <link rel="self" href="https://wjcsw.github.io/atom.xml"/>
+    <subtitle>个人学习博客</subtitle>
+    <logo>https://wjcsw.github.io/images/avatar.png</logo>
+    <icon>https://wjcsw.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, 想见山海</rights>
+    <entry>
+        <title type="html"><![CDATA[[Python] pyinstaller--将python程序打包为不依赖于本机环境的独立可执行文件]]></title>
+        <id>https://wjcsw.github.io/tiu-ywk-p/</id>
+        <link href="https://wjcsw.github.io/tiu-ywk-p/">
+        </link>
+        <updated>2023-07-08T07:28:29.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="概述">概述</h2>
+<p><code>Pyinstaller</code>是一个用于将Python程序打包成可执行文件的工具。它可以将Python程序打包成单个可执行文件，无需安装Python解释器和第三方库，方便程序的分发和部署。</p>
+<p><code>Pyinstaller</code>支持Windows、Linux和MacOS等多个平台，可以将Python程序打包成对应平台的可执行文件。打包完成后的可执行文件可以直接在对应平台使用，无需安装任何环境或者依赖。</p>
+<p><code>Pyinstaller</code>的使用非常简单，只需要在命令行中执行<code>Pyinstaller</code>命令，并指定要打包的Python程序的入口文件即可。<code>Pyinstaller</code>会自动分析程序的依赖关系，并将所有依赖的模块和库打包到可执行文件中。</p>
+<p>打包完成后，可以在<code>dist</code>目录下找到生成的可执行文件。</p>
+<p>除了将Python程序打包成可执行文件外，<code>Pyinstaller</code>还支持许多高级功能，如自定义打包选项、添加图标、加密代码等。这些功能可以通过在命令行中指定参数或创建配置文件来实现。</p>
+<p><code>Pyinstaller</code>的优点包括：</p>
+<ul>
+<li>简单易用：<code>Pyinstaller</code>的使用非常简单，只需要执行一个命令即可将Python程序打包成可执行文件。</li>
+<li>跨平台支持：<code>Pyinstaller</code>支持多个平台，可以将Python程序打包成对应平台的可执行文件。</li>
+<li>自动化打包：<code>Pyinstaller</code>会自动分析程序的依赖关系，并将所有依赖的模块和库打包到可执行文件中。</li>
+<li>高级功能：<code>Pyinstaller</code>支持许多高级功能，如自定义打包选项、添加图标、加密代码等。</li>
+</ul>
+<p><code>Pyinstaller</code>的缺点包括：</p>
+<ul>
+<li>打包后文件较大：由于<code>Pyinstaller</code>会将所有依赖的模块和库打包到可执行文件中，因此打包后的文件较大。</li>
+<li>不支持所有第三方库：<code>Pyinstaller</code>并不支持所有第三方库，有些库可能需要手动配置才能正确打包。</li>
+<li>可执行文件可能被反编译：由于可执行文件中包含了程序的源代码，因此可能会被反编译，导致代码泄露。</li>
+</ul>
+<p>但是，总的来说，Pyinstaller是一个非常好用的工具，方便程序的分发和部署。下面介绍它的使用方法。</p>
+<h2 id="使用方法">使用方法</h2>
+<p>下面是一些常用的Pyinstaller参数和选项及其含义，我根据使用频率将其分为了两级。</p>
+<h3 id="高频参数">高频参数</h3>
+<ul>
+<li><code>-h</code>：显示帮助信息。</li>
+<li><code>-F</code>：将Python程序打包成单个可执行文件。</li>
+<li><code>-D</code>：将Python程序打包成多个文件，包括可执行文件和依赖的模块和库。</li>
+<li><code>-w</code>/<code>--windowed</code>：使用窗口模式，不显示命令行窗口。</li>
+<li><code>-c</code>/<code>--console</code>：使用控制台模式，显示命令行窗口。</li>
+<li><code>-n</code>/<code>--name</code>：指定生成的可执行文件的名称。</li>
+<li><code>-i</code>/<code>--icon</code>：指定可执行文件的图标。</li>
+<li><code>--add-data</code>：指定需要打包的数据文件。</li>
+<li><code>--add-binary</code>：指定需要打包的二进制文件。</li>
+<li><code>-p</code>：指定Python模块的搜索路径。</li>
+<li><code>-y</code>：自动覆盖输出目录中的现有文件。</li>
+<li><code>--clean</code>：在打包之前清除缓存和临时文件。</li>
+<li><code>--distpath</code>：指定输出目录。</li>
+<li><code>--workpath</code>：指定工作目录。</li>
+<li><code>--specpath</code>：指定<code>.spec</code>文件的输出目录。</li>
+</ul>
+<h3 id="低频参数">低频参数</h3>
+<ul>
+<li><code>-s</code>：生成一个控制台程序，但不显示Python解释器的输出。</li>
+<li><code>-v</code>：显示详细的输出信息。</li>
+<li><code>--hidden-import</code>：指定需要导入的隐藏模块。</li>
+<li><code>--additional-hooks-dir</code>：指定额外的钩子目录。</li>
+<li><code>--exclude-module</code>：指定不需要打包的模块。</li>
+<li><code>--key</code>：指定加密代码的密钥。</li>
+<li><code>--upx-dir</code>：指定UPX压缩工具的路径。</li>
+<li><code>--upx-exclude</code>：指定不需要压缩的文件类型。</li>
+<li><code>--upx-compress-level</code>：指定UPX压缩级别。</li>
+<li><code>--log-level</code>：指定日志输出级别。</li>
+<li><code>--runtime-tmpdir</code>：指定运行时临时目录。</li>
+<li><code>--debug</code>：生成调试信息。</li>
+<li><code>--strip</code>：去除调试信息。</li>
+<li><code>--noconfirm</code>：不显示确认提示。</li>
+</ul>
+<h3 id="用例">用例</h3>
+<p>这里给出一些常见的用法便于理解和使用</p>
+<pre><code class="language-sh">pyinstaller -F myprogram.py
+</code></pre>
+<p><code>PyInstaller</code>会将<code>myprogram.py</code>文件打包成单个可执行文件，并将所有依赖的模块和库打包到可执行文件中。</p>
+<pre><code class="language-sh">pyinstaller -F --distpath=./dist --icon=myicon.ico myprogram.py
+</code></pre>
+<p><code>PyInstaller</code>会将<code>myprogram.py</code>文件打包成单个可执行文件，并将所有依赖的模块和库打包到可执行文件中。生成的可执行文件将保存在<code>./dist</code>目录下，并使用<code>myicon.ico</code>作为图标。</p>
+<pre><code class="language-sh">pyinstaller -D --add-data &quot;data.txt;.&quot; myprogram.py
+</code></pre>
+<p>使用<code>-D</code>参数可以将Python程序打包为多个文件，使用<code>--add-data</code>参数指定需要打包的数据文件。</p>
+<p><code>--add-data</code>参数的格式是<code>&quot;源文件;目标目录&quot;</code>，其中源文件是要打包的文件路径，目标目录是打包后文件中的目标路径。</p>
+<p>在示例中，将<code>data.txt</code>文件打包，并指定目标目录为当前目录（<code>.</code>）。</p>
+<p>打包完成后，可以在生成的可执行文件所在的目录中找到<code>data.txt</code>文件。在程序运行时，可以使用相对路径或绝对路径来访问该数据文件。</p>
+<p>请注意，<code>--add-data</code>参数可以多次使用，以添加多个数据文件。每个数据文件都需要指定源文件和目标目录。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] 向3ds Max中写入UV数据]]></title>
+        <id>https://wjcsw.github.io/TQnKduscP/</id>
+        <link href="https://wjcsw.github.io/TQnKduscP/">
+        </link>
+        <updated>2023-06-25T10:06:36.000Z</updated>
+        <content type="html"><![CDATA[<p>这篇博客对应于上一篇博客：<a href="https://wjcsw.github.io/yUgU6O2CS/">[Python] 从FBX文件中读取数据</a>，介绍如何将获得的UV数据写入到3ds MAX中的模型中。</p>
+<p>首先，必须要知道的一个重要常识是，3ds Max中的索引大部分都是从1开始的，与Python不同，使用时必须注意到这点去转换索引。</p>
+<h3 id="1-获取要写入的模型">1. 获取要写入的模型</h3>
+<p>通过<code>getNodeByName</code>接口就可以直接根据模型名称获取到需要写入的模型</p>
+<pre><code class="language-python"># 引入Max的python库
+from pymxs import runtime as rt
+
+triObj = rt.getNodeByName(fbxMeshName) 
+</code></pre>
+<p>由于模型类型poly和mesh类型的接口不一致，为了方便起见，可以通过类型判断，用一个变量统一地使用接口</p>
+<pre><code class="language-python">rt_convert = rt.polyop
+nodecls = rt.classOf(triObj)
+if str(nodecls) == &quot;Editable_mesh&quot;:
+    rt_convert = rt.meshop
+</code></pre>
+<h3 id="2-添加通道">2. 添加通道</h3>
+<p>通过<code>defaultMapFaces</code>方法可以新建一个初始化好的新通道，并使用<code>channelInfo.NameChannel</code>来为通道命名</p>
+<p>注意 使用这种方法获得的新通道不是修改器形式</p>
+<p>为了可以更好的控制 我们可以通过<code>channelInfo.AddChannel</code>方法来新建一个通道 再使用<code>defaultMapFaces</code>方法进行初始化 这样新通道就是以修改器形式展示的了</p>
+<p>可以访问节点的修改器属性<code>triObj.modifiers[0].name</code>为该修改器命名 以更好的理解</p>
+<pre><code class="language-python">rt.channelInfo.AddChannel(oriObj)
+rt_convert.defaultMapFaces(triObj, uv_num + 1) # 初始化通道
+rt.channelInfo.NameChannel(triObj, 3, uv_num + 1, &quot;new&quot;) # 为新通道命名
+triObj.modifiers[0].name = &quot;AutoUV - Add EmptyUV&quot;
+</code></pre>
+<h3 id="3-设置通道">3. 设置通道</h3>
+<p>这里的<code>UVCount</code>表示UV面的大小数组，<code>UVValue</code>是UV顶点数组</p>
+<pre><code class="language-python">uvWriteChannel = 2
+nfaces = len(UVCount)
+nverts = int(len(UVValue) / 2)
+
+rt_convert.setMapSupport(triObj, uvWriteChannel, True)
+rt_convert.setNumMapVerts(triObj, uvWriteChannel, nverts)
+rt_convert.setNumMapFaces(triObj, uvWriteChannel, nfaces)
+</code></pre>
+<p>使用 <code>SetMapSupport()</code>设置 UV 映射支持启用2号通道， 使用<code>SetNumMapVerts() </code>设置UV 映射的顶点数，使用 <code>SetNumMapFaces()</code> 设置UV 映射的面数</p>
+<h3 id="4-设置顶点">4. 设置顶点</h3>
+<p>3ds Max中的顶点类型为<code>Point3</code>类型，由于UV数据为二维坐标，这里将获取到顶点分别设置为<code>Point3</code>的x和y，将z设置为0<br>
+接着遍历所有顶点 使用<code>setMapVert</code>方法设置每个顶点的坐标</p>
+<pre><code class="language-python"># faces
+for vert in range(nverts):
+    UVVert = rt.Point3(UVValue[2 * vert], UVValue[2 * vert + 1], 0)
+    rt_convert.setMapVert(triObj, uvWriteChannel, vert + 1, UVVert)
+</code></pre>
+<h3 id="5-设置面">5. 设置面</h3>
+<p>由于不同的类型会导致对应模型面数组的不一致，因此这里通过类型判断分别设置了面数组的类型<br>
+接着遍历每个面，构成对应的面的顶点序号数组，最后使用<code>setMapFace</code>方法将面数据写入3ds Max中</p>
+<pre><code class="language-python">faceIndex = -1
+for face in range(nfaces):
+    if str(triObjcls) == &quot;Editable_mesh&quot;:
+        faceVertex = rt_convert.getMapFace(triObj, uvWriteChannel, face + 1)
+    else:
+        faceVertex = rt.Array()
+    for d in range(UVCount[face]):
+        faceIndex += 1
+        if str(triObjcls) == &quot;Editable_mesh&quot;:
+            faceVertex[d] = UVIndex[faceIndex] + 1
+        else:
+            rt.append(faceVertex, UVIndex[faceIndex] + 1)
+
+    rt_convert.setMapFace(triObj, uvWriteChannel, face + 1, faceVertex)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] QT简易使用]]></title>
+        <id>https://wjcsw.github.io/pNfQqR9zT/</id>
+        <link href="https://wjcsw.github.io/pNfQqR9zT/">
+        </link>
+        <updated>2023-06-21T09:42:16.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="工具">工具</h2>
+<p>本文使用python语言进行的GUI开发，这里使用的模块是<code>QT.py</code>，它可以以统一的API使用不同的GUI工具包，具体介绍可见<a href="https://wjcsw.github.io/pNfQqR9zT/">QT、PyQt、Pyside、QT.py之间的关系和区别</a></p>
+<h2 id="ui组件">UI组件</h2>
+<p>这些GUI组件类是Qt库中常用的组件，可以用于创建各种类型的GUI应用程序。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>QWidget</code></td>
+<td style="text-align:center"><code>QWidget</code>是Qt库中所有GUI组件的基类，也可以用于创建窗口</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QHBoxLayout</code></td>
+<td style="text-align:center">水平布局类，用于在水平方向上排列GUI组件。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QVBoxLayout</code></td>
+<td style="text-align:center">垂直布局类，用于在垂直方向上排列GUI组件。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QGroupBox</code></td>
+<td style="text-align:center">组框类，用于创建一个带有标题的组框，可以将其他GUI组件放在组框中。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QLabel</code></td>
+<td style="text-align:center">标签类，用于显示文本或图像。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QToolButton</code></td>
+<td style="text-align:center">工具按钮类，用于创建一个带有图标和文本的按钮。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QPushButton</code></td>
+<td style="text-align:center">普通按钮类，用于创建一个带有文本的按钮。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QComboBox</code></td>
+<td style="text-align:center">组合框类，用于创建一个下拉列表框，可以选择其中的一个选项。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QProgressBar</code></td>
+<td style="text-align:center">进度条类，用于显示进度条。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QSpinBox</code></td>
+<td style="text-align:center">微调框类，用于创建一个微调框，允许用户输入整数，或者通过上下按键递增或者递减。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QSlider</code></td>
+<td style="text-align:center">滑动条类，用于创建一个滑动条，可以通过滑动条选择一个数字。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QCheckBox</code></td>
+<td style="text-align:center">复选框类，用于创建一个复选框，可以选择或取消选择一个选项。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>QSizePolicy</code></td>
+<td style="text-align:center">大小策略类，用于设置GUI组件的大小策略，例如最小大小、最大大小、扩展大小等。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用法介绍">用法介绍</h2>
+<h3 id="qapplication">QApplication</h3>
+<pre><code class="language-python">import sys
+from Qt import QtWidgets, QtCore
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(&quot;simple test&quot;)
+        self.setGeometry(1800, 100, 385, 672)
+        self.show()
+
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
+
+    sys.exit(app.exec_())
+</code></pre>
+<p><img src="https://wjcsw.github.io/post-images/1687684043559.png" alt="" loading="lazy"><br>
+这里首先定义了一个简单的类，继承了<code>QtWidgets.QMainWindow</code>。然后在其初始化函数中调用父类的初始化，以及自定义的初始化函数<code>initUI()</code>。</p>
+<p>在<code>initUI()</code>中，调用<code>setWindowTitle</code>创建应用程序的标题，<code>setGeometry</code>用于设置窗口的大小位置，四个参数依次为窗口的横坐标，纵坐标，宽，高。调用<code>show</code>让窗口显示。</p>
+<p>这里通过<code>Qt.py</code>模块的<code>QtWidgets</code>来创建一个Qt应用。<code>QApplication</code>专为<code>QGuiApplication</code>提供基于<code>QWidget</code>的应用程序所需的一些功能。不管你有多少个窗口，都有且仅有一个<code>QApplication</code>对象来管理它们。</p>
+<p>对于基于非<code>QWidget</code>的Qt应用程序，请改用<code>QGuiApplication</code>，因为它不依赖于<code>QtWidgets</code>库。</p>
+<p>在创建一个<code>QApplication</code>的实例，需要传入一个参数，一般为<code>sys.argv</code> 或一个空列表<code>[]</code>。这个参数的作用是在应用程序启动时将任何配置设置传递给Qt。</p>
+<p>在启动时传递<code>sys.argv</code>到<code>QApplication</code>允许你从命令行中定制Qt的行为。如果你不想或者不需要向Qt传递命令行参数，你可以跳过传递<code>sys.argv</code>，使用空列表<code>[]</code>。</p>
+<p>当你的应用程序启动时，<code>sys.argv</code>包含用于启动应用程序的参数。如果你从命令行启动一个Python应用程序，<code>sys.argv</code>将包含你的Python脚本文件的名字作为第一个条目。而跟在启动程序的命令末尾添加的任何内容都会被附加到<code>sys.argv</code>上。</p>
+<pre><code class="language-cmd">python test.py --info --test
+</code></pre>
+<p>这样启动程序中获取到的<code>sys.argv</code>就是<code>['test.py','--info','--test']</code></p>
+<p>注意，在命令行中参数是以空格分割的, 所以任何用空格分隔的东西都会被当作一个新的参数。如果要传递包含空格的参数，需要用引号将其包起来。</p>
+<p>Qt程序启动的常见参数包括：</p>
+<ul>
+<li><code>--platform</code> <em>platformName</em>[:options] 指定Qt平台抽象（QPA）插件。这覆盖了QT_QPA_PLATFORM环境变量。</li>
+<li><code>--platformpluginpath</code> <em>path</em>  指定平台插件的路径。这覆盖了QT_QPA_PLATFORM_PLUGIN_PATH环境变量。</li>
+<li><code>--platformtheme</code> <em>theme</em>  指定平台的主题。这将覆盖QT_QPA_PLATFORMTHEME环境变量。</li>
+<li><code>--qwindowicon</code>  <em>icon</em>  设置一个窗口的默认图标。</li>
+<li><code>--qwindowgeometry</code>  <em>geometry</em>  为主窗口指定一个几何图形，应该像<code>100x100+50+50</code>那样传递。</li>
+<li><code>--qwindowtitle</code> <em>title</em>  设置第一个窗口的标题。</li>
+</ul>
+<p>上面<code>app.exec_()</code>的作用是运行主循环，必须调用<code>QApplication</code>对象的<code>exec_()</code>或<code>exec()</code>才能开始事件处理，调用该方法进入程序的主循环直到调用<code>exit()</code>结束。主事件循环从窗口系统接收事件，并将其分派给应用程序小部件。该方法结束时返回一个状态码。</p>
+<p><code>sys.exit(n)</code>的作用是退出应用程序并返回状态码n到父进程。</p>
+<p>Python 3之前，<code>exec</code>是一个保留的关键字，所以Qt开发人员在其中添加了下划线。所以对于Python 3的Qt，两个exec函数是相同的。对于较旧的Qt，只有<code>exec_()</code>可用。</p>
+<p>注意 <code>show</code>方法并不是直接让窗口显示，本质上可以将其理解为界定窗口在何时弹出的“声明”，解释器读取到这里，Qt程序还没有启动，只是确定了一旦启动，应该在“这个时候”弹出这个窗口，真正让程序启动的是exec函数。</p>
+<h3 id="qgroupbox">QGroupBox</h3>
+<pre><code class="language-python">self.global_group = QtWidgets.QGroupBox(self)
+self.global_group.setGeometry(QtCore.QRect(0, 40, 380, 350))
+self.global_group.setTitle(&quot;全局&quot;)
+</code></pre>
+<p><code>QGroupBox</code>类提供带有标题的组框框架。一个组框提供一个框架，一个标题，一个快捷键，并在其内部显示其他各种小部件。快捷键用于将键盘焦点移到组框的子窗口小部件之一。</p>
+<p>这里通过<code>setGeometry</code>设置组框的大小和位置，调用<code>setTitle</code>设置组框的标题。默认标题位置在左上，也可以通过<code>setAlignment</code>来设置标题对齐方式。</p>
+<figure data-type="image" tabindex="1"><img src="https://wjcsw.github.io/post-images/1687684124415.png" alt="" loading="lazy"></figure>
+<h3 id="qtoolbutton">QToolButton</h3>
+<pre><code class="language-python">help_button = QtWidgets.QToolButton(self)
+help_button.setGeometry(QtCore.QRect(320, 7, 30, 31))
+help_button.setIcon(QtGui.QIcon(&quot;help.png&quot;))
+</code></pre>
+<p><code>QAbstractButton</code>类为抽象类，不能实例化，必须由其他的按钮类继承<code>QAbstractButton</code>类，来实现不同的功能和表现形式，常见的按钮<code>QPushButton</code>，<code>QToolButton</code>，<code>QRadioButton</code>和<code>QCheckBox</code>这些按钮均继承自QAbstractButton类。</p>
+<p><code>QToolButton</code>类让我们可以快速地实现命令和选项按钮，它通常用在<code>QToolBar</code>中。相比于普通的命令按钮<code>QPushButton</code>，工具按钮通常不显示文本，只显示图标。</p>
+<p>这里通过调用<code>setIcon</code>来设置按钮显示的图标，图标通过<code>QtGui.QIcon</code>类创建。当然，也可以通过<code>setText</code>来设置按钮显示文本。</p>
+<figure data-type="image" tabindex="2"><img src="https://wjcsw.github.io/post-images/1687684185037.png" alt="" loading="lazy"></figure>
+<h3 id="qlabel">QLabel</h3>
+<pre><code class="language-python">Component_label = QtWidgets.QLabel(self)
+Component_label.setGeometry(QtCore.QRect(20, 7, 100, 30))
+Component_label.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Sunken)
+Component_label.setText(&quot;右下对齐&quot;)
+Component_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://wjcsw.github.io/post-images/1687684231543.png" alt="" loading="lazy"></figure>
+<p><code>QLabel</code>是QT界面中的标签类，它从<code>QFrame</code>下继承，<code>QLabel</code>类代表标签，它是一个用于显示文本或图像的窗口部件。</p>
+<p><code>QLabel</code>对象的显示内容可以包括纯文本，富文本，图像，动画，数字类型，当使用任何方法改变内容时，任何先前的内容都被清除。你可以通过属性获取或修改内容,主要如下：</p>
+<pre><code class="language-python">text()：获取显示的文本
+setText()：设置纯文本和富文本内容
+pixmap()：获取显示的图像 
+setPixmap(QPixmap pixmap)：设置显示的图像
+setNum(num)：设置显示的文本为代表数字num的字符串
+setMovie(QMovie mov)：设置显示的动画
+</code></pre>
+<p><strong>注意</strong>：当在<code>QLabel</code>中使用<code>setText()</code>设置文本内容的时候，因为<code>QLabel</code>会尝试猜测它是将文本显示为纯文本还是作为HTML 4标记的一部分的富文本。想明确地显示文本格式，请调用<code>setTextFormat()</code>，例如如果您希望文本是纯文本格式，但无法控制文本源（显示从Web上加载的数据时等情况）。</p>
+<p>默认情况下，标签显示左对齐、垂直居中的文本和图像。<code>QLabel</code>的外观可以通过多种方式进行调整和微调。</p>
+<p>可以使用<code>setFrameStyle</code>来指定标签的样式，上面就指定了一个凹陷面板的样式。</p>
+<p>可以使用<code>setAlignment()</code>和<code>setIndent()</code>来调整<code>QLabel</code>小部件区域内的对齐方式和缩进值。对于文本内容，还可以使用<code>setwordpwrap()</code>指定沿单词边界换行。</p>
+<p>Qt中的组件对齐方式取值如下：</p>
+<pre><code class="language-py">1）Qt.AlignLeft:：水平方向靠左。
+2）Qt.AlignRight：水平方向靠右。
+3）Qt.AlignHCenter：水平方向居中。
+4）Qt.AlignJustify：水平方向调整间距两端对齐。
+5）Qt.AlignTop：垂直方向靠上。
+6）Qt.AlignButton：垂直方向靠下。
+7）Qt.AlignVCenter：垂直方向居中。
+8）Qt.AlignCenter：等价于 Qt.AlignHCenter | Qt.AlignVCenter。
+其中一个水平方向的取值和一个垂直方向的取值可以用 “|” 的方式组合起来以同时指定两个方向的对齐方式。
+</code></pre>
+<h3 id="qspinbox">QSpinBox</h3>
+<pre><code class="language-python">newComponent = QtWidgets.QSpinBox(self.global_widget)
+newComponent.setMinimum(0)
+newComponent.setMaximum(100)
+newComponent.setValue(1)
+</code></pre>
+<p><img src="https://wjcsw.github.io/post-images/1687684267735.png" alt="" loading="lazy"><br>
+<code>QSpinBox</code>类用于整数的显示和输入，一般显示十进制数，也可以显示二进制、十六进制的数，而且可以在显示框中增加前缀或后缀。</p>
+<p>如果要显示浮点数，使用<code>QDoubleSpinBox</code>用于浮点数的显示和输入，可以设置显示小数位数，也可以设置显示的前缀和后缀。</p>
+<p><code>QSpinBox</code>和<code>QDoubleSpinBox</code>都是<code>QAbstractSpinBox</code>的子类，具有大多数相同的属性，只是参数类型不同，通过属性的对应set方法就可以为其设置各项属性的值。</p>
+<p><code>QSpinBox</code>的默认数值范围是0-99，默认每次变化步数1，用户可以通过设置属性自行修改范围和步数。</p>
+<p>常用的属性包括：</p>
+<ul>
+<li><strong>prefix</strong>：数字显示的前缀，例如“E”</li>
+<li><strong>suffix</strong>：数字显示的后缀，例如“cm”</li>
+<li><strong>minimum</strong>：数值范围的最小值，如 0</li>
+<li><strong>maximum</strong>：数值范围的最大值，如 255</li>
+<li><strong>singlestep</strong>：单击右侧上下调整按钮时的单步改变值，如设置为 1，或 0.1</li>
+<li><strong>value</strong>：当前显示的值</li>
+<li><strong>displaylntegerBase</strong>：QSpinBox 特有属性，显示整数使用的进制，例如 2 就表示二进制</li>
+<li><strong>decimals</strong>：QDoubleSpinBox 特有属性，显示数值的小数位数，例如 2 就显示两位小数</li>
+</ul>
+<h3 id="qcombobox">QComboBox</h3>
+<pre><code class="language-python">newComponent = QtWidgets.QComboBox(self.global_widget)
+newComponent.addItems([&quot;选项1&quot;, &quot;选项2&quot;])
+newComponent.addItem(&quot;选项3&quot;)
+newComponent.addItem(QtGui.QIcon(&quot;help.png&quot;), &quot;选项4&quot;)
+newComponent.setCurrentIndex(1)
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://wjcsw.github.io/post-images/1687684289258.png" alt="" loading="lazy"></figure>
+<p><code>QComboBox</code>是下拉列表框组件类，它提供一个下拉列表供用户选择，也可以直接当作一个<code>QLineEdit</code>用作输入。<code>QComboBox</code>除了显示可见下拉列表外，每个项（item，或称列表项）还可以关联一个<code>QVariant</code>类型的变量，用于存储一些不可见数据。</p>
+<p>通过<code>addItems</code>可以一次性添加列表中的选项作为下拉框的选项。</p>
+<p><code>addItem</code>可以添加一个新的下拉框选项，第一个参数为图标时，添加带图标的项，否则添加不带图标的项。</p>
+<p><code>setCurrentIndex()</code>用于指定当前默认显示的选项序号，注意序号从0开始。</p>
+<p><code>currentlndex()</code>返回当前选择的选项序号，<code>currentText()</code>返回当前选择项的文字，<code>currentData()</code>返回当前选择项关联的数据。</p>
+<p><code>setView(QAbstractItemView)</code>设置<code>QComboBox</code>下拉框的样式，可以是列表、树、表格等格式。</p>
+<h3 id="qcheckbox">QCheckBox</h3>
+<pre><code class="language-python">newComponent = QtWidgets.QCheckBox(self.global_widget)
+newComponent.setChecked(False)
+
+
+newComponent_1 = QtWidgets.QCheckBox(self.global_widget)
+newComponent_1.setTristate(True)
+newComponent.setCheckState(QtCore.Qt.PartiallyChecked)
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://wjcsw.github.io/post-images/1687684305506.png" alt="" loading="lazy"></figure>
+<p><code>QCheckBox</code> 是 Qt 里的复选框控件，一般来说复选框通常用于表示可以启用或禁用的应用程序中的功能。</p>
+<p><code>QCheckBox</code>继承自<code>QAbstractButton</code>，它提供了一个带文本标签的复选框。</p>
+<p><code>QCheckBox</code>（复选框）和<code>QRadioButton</code>（单选框）都是选项按钮。这是因为它们都可以在开（选中）或者关（未选中）之间切换。区别是对用户选择的限制：单选框定义了“多选一”的选择，而复选框提供的是“多选多”的选择。</p>
+<p>只要复选框被选中或者清除，都会发射一个<code>stateChanged()</code>信号。如果想在复选框状态改变的时候触发一个行为，请连接这个信号，可以使用<code>isChecked()</code>来查询复选框是否被选中。</p>
+<p>除了常用的选中和未选中两个状态，<code>QCheckBox</code>还可选地提供了第三种状态（半选）。</p>
+<p><code>QCheckBox</code>类中常用方法如下：</p>
+<pre><code class="language-py">setChecked()：设置复选框的状态，设置为True表示选中，False表示取消选中的复选框
+setText()：设置复选框的显示文本
+text()：返回复选框的显示文本
+isChecked()：检查复选框是否被选中
+setTriState()：设置复选框为一个三态复选框
+setCheckState()：设置三态复选框的状态
+CheckState()：获取当前三态复选框的状态
+</code></pre>
+<p>三态复选框的三种状态如下：</p>
+<pre><code class="language-py">Qt.Checked：值为2，表示组件没有被选中（默认）
+Qt.PartiallyChecked：值为1，表示组件被半选中
+Qt.Unchecked：值为0，表示组件被选中
+</code></pre>
+<h3 id="qslider">QSlider</h3>
+<pre><code class="language-python">newComponent = QtWidgets.QSlider(self.global_widget)
+newComponent.setMinimum(1)
+newComponent.setMaximum(100)
+newComponent.setValue(50)
+newComponent.setOrientation(QtCore.Qt.Horizontal)
+
+sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+sizePolicy.setHorizontalStretch(0)
+sizePolicy.setVerticalStretch(0)
+sizePolicy.setHeightForWidth(newComponent.sizePolicy().hasHeightForWidth())
+newComponent.setSizePolicy(sizePolicy)
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://wjcsw.github.io/post-images/1687684344601.png" alt="" loading="lazy"></figure>
+<p><code>QSlider</code>控件提供一个垂直或者水平的滑动条，滑动条是一个用于控制有界值典型的控件，它允许用户沿水平或者垂直方向在某一范围内移动滑块，并将滑块所在的位置转换为一个合法范围内的整数值。</p>
+<p>这种方式比输入数字或者使用<code>QSpinBox</code>（计数器）更加自然，在槽函数中对滑块所在位置的处理相当于从整数之间的最小值和最高值进行取值。</p>
+<p>滑块条控件可以以垂直或者水平的方式显示，通过<code>setOrientation</code>来控制显示方向，可选的取值为：</p>
+<pre><code class="language-py">Qt.Horizontal 水平显示
+Qt.Vertical   垂直显示
+</code></pre>
+<p>作为一个获取整数输入的控件，它与<code>QSpinBox</code>之间有着不少相似的属性。常见的<code>QSlider</code>类属性设置方法如下：</p>
+<pre><code class="language-py">setMinimum()：设置滑动条控件的最小值
+setMaximum()：设置滑动条控件的最大值
+setSingleStep()：设置滑动条控件的步长
+setValue()：设置滑动条控件的值
+value()：获取滑动条控件的值
+setTickInterval()：设置刻度间隔
+setTickPosition()：设置刻度标记的位置，可以输入一个枚举值，这个枚举值指定刻度线想当与滑块和用户操作的位置。
+</code></pre>
+<p>刻度标记位置位置的可选取值以及含义如下：</p>
+<pre><code class="language-py">QSlider.NoTicks：不绘制任何刻度线
+QSlider.TicksBothSides：在滑块的两侧绘制刻度线
+QSlider.TicksAbove：在滑块的（水平）上方绘制刻度线
+QSlider.TicksBelow：在滑块的（水平）下方绘制刻度线
+QSlider.TicksLeft：在滑块的（垂直）左侧绘制刻度线
+QSlider.TicksRight：在滑块的（垂直）右侧绘制刻度线
+</code></pre>
+<p>QSlider类中的常用信号包括：</p>
+<pre><code class="language-py">valueChanged：当滑块的值发生改变时发射此信号，此信号是最常用的
+sliderPressed：当用户按下滑块时发射此信号
+sliderMoved：当用户拖动滑块时发射此信号
+sliderReleased：当用户释放滑块时发射此信号
+</code></pre>
+<p><code>QSizePolicy</code>是用于描述水平或垂直布局调整的属性。<code>setHorizontalPolicy()</code>确定水平调整级别，<code>setVerticalPolicy()</code>确定垂直调整级别，也可以创建时一次性设置两个布局策略。</p>
+<p><code>QSizePolicy</code>的大小策略可选取值及含义如下：<br>
+<img src="https://wjcsw.github.io/post-images/1687684380292.png" alt="" loading="lazy"><br>
+这里使用sizePolicy来控制silder的长度和位置，因为在默认情况下，它会紧挨着上个控件的位置开始。</p>
+<h3 id="qpushbutton">QPushButton</h3>
+<pre><code class="language-py">default_para = QtWidgets.QPushButton(self)
+default_para.setGeometry(QtCore.QRect(10, 400, 91, 23))
+default_para.setText(&quot;恢复默认参数&quot;)
+</code></pre>
+<p><img src="https://wjcsw.github.io/post-images/1687685825123.png" alt="" loading="lazy"><br>
+<code>QPushButton</code>小部件提供了一个命令按钮。按钮或命令按钮可能是任何图形用户界面中最常用的小部件。按下（或者单击）按钮以命令计算机执行某个操作。</p>
+<p>一个命令按钮是矩形的，通常显示一个描述其动作的文本标签，还可以选择一个小图标。</p>
+<p>显示内容可以使用构造函数在创建时就设置，也稍后使用<code>setText()</code>和<code>setIcon()</code>设置和更改。</p>
+<p>如果该按钮被禁用，文本和图标的外观与GUI风格相关，以使按钮看起来“禁用”。</p>
+<p>当按钮被鼠标，空格键或键盘快捷键激活时，按钮发出<code>clicked()</code>信号。连接到这个信号来执行按钮的动作。按钮也提供其他较少使用的信号，例如<code>pressed()</code>和<code>released()</code>。</p>
+<p><code>QPushButton</code>类中的常用方法如下：</p>
+<pre><code class="language-py">setCheckable()：设置按钮是否已经被选中，如果设置True，则表示按钮将保持已点击和释放状态
+toggle()：在按钮状态之间进行切换
+setIcon()：设置按钮上的图标
+setEnabled()：设置按钮是否可以使用，当设置为False时，按钮变成不可用状态，点击它不会发射信号
+isChecked()：返回按钮的状态，返回值为True或者False
+setDefault()：设置按钮的默认状态
+setText()：设置按钮的显示文本
+text()：返回按钮的显示文本
+</code></pre>
+<p>通过按钮名字能为<code>QPushButton</code>设置快捷键，比如名字为‘&amp;Download’的按键，它的快捷键是‘Alt+D’。</p>
+<p>快捷键规则是;想要实现快捷键为“Alt+D”，那么按钮的名字里需要有D这个字母，并且在D的前面加上“&amp;”。一般来说，我们用首字母设置快捷键，而且在按钮显示时“&amp;”不会显示出来，如果想显示该字符，那么需要转义使用。</p>
+<h3 id="qprogressbar">QProgressBar</h3>
+<pre><code class="language-py">progressBar = QtWidgets.QProgressBar(self)
+progressBar.setGeometry(QtCore.QRect(10, 430, 350, 23))
+progressBar.setValue(10)
+progressBar.setStyleSheet(&quot;QProgressBar { border: 2px solid grey; border-radius: 5px; color: rgb(20,20,20);  background-color: #FFFFFF; text-align: center;}QProgressBar::chunk {background-color: rgb(100,200,200); border-radius: 10px; margin: 0.1px;  width: 1px;}&quot;)
+</code></pre>
+<p><img src="https://wjcsw.github.io/post-images/1687685836102.png" alt="" loading="lazy"><br>
+<code>QProgressBar</code>控件提供了水平或者垂直的进度条，它以动画的形式显示程序的处理进度。 可以通过设置属性来设置进度条的最小值、最大值和当前值显示进度，最小值和最大值默认分别为0和99。</p>
+<p><code>QPushButton</code>类中的常用方法如下：</p>
+<pre><code class="language-py">setRange()：设置进度条的取值范围(最小值和最大值)
+setMinimum()：设置进度条的最小值
+setFont():设置文本字体
+setMaximum()：设置进度条的最大值
+setValue()：设置进度条的值
+reset()：让进度条重新回到开始位置
+setOrientation()：设置进度条方向(水平: Qt.Horizontal, 垂直: Qt.Vertical)
+setTextVisible()：设置进度条的文本是否可见
+setTextDirection()：设置文本方向，只对垂直进度条有效
+setInvertedAppearance()：设置进度条的方向(True/False:正反方向)
+setFormat()：设置文本字符串的格式(%p, 百分比显示,这是默认情况, %v: 当前进度, %m :总步数)
+setStyleSheet()：设置进度条的样式，需要一定的样式基础。
+</code></pre>
+<h3 id="qvboxlayoutqhboxlayout">QVBoxLayout/QHBoxLayout</h3>
+<pre><code class="language-python">self.global_layout = QtWidgets.QVBoxLayout(self.global_widget)
+self.global_layout.setContentsMargins(0, 0, 0, 0)
+
+horizontalLayout = QtWidgets.QHBoxLayout()
+horizontalLayout.addWidget(Component_label，1)
+horizontalLayout.addWidget(Component，1)
+
+self.global_layout.addLayout(horizontalLayout)
+</code></pre>
+<p><code>QVBoxLayout</code>是Qt中的垂直布局类，用于在垂直方向上排列GUI组件。类似地，有<code>QHBoxLayout</code>类，用于在水平方向上排列GUI组件。</p>
+<p>使用布局类能让程序具有更强的适应性，这个才是布局一个应用的更合适的方式。</p>
+<p><code>setContentsMargins</code>设置左、上、右、下的外边距，可以将左、上、右、下的外边距设置为不同的值。</p>
+<p>通过调用<code>addWidget</code>可以将<code>QtWidget</code>的组件加入到布局中，第一个参数为要加入的组件，第二个为可选参数，代表显示组件比例。类似地，调用<code>addLayout</code>方法，可以将新的布局添加进当前布局内部。</p>
+<p>通过<code>addStretch</code>可以在布局中添加一个可伸缩的控件QSpaceItem，0为最小值，并将其作为伸缩量添加到布局，参数为一个整数表示控件的比例，默认为0。</p>
+<h3 id="一个完整的用例">一个完整的用例</h3>
+<pre><code class="language-python">import sys
+from Qt import QtWidgets, QtCore, QtGui
+
+
+class MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.head_widget = None
+        self.head_layout = None
+        self.global_layout = None
+        self.global_widget = None
+        self.global_group = None
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(&quot;simple test&quot;)
+        self.setGeometry(1800, 100, 385, 480)
+        self.setGlobalUI()
+        self.setHeaderUI()
+        self.setBottomUI()
+        self.show()
+
+    def add_SpinBox(self):
+        Component_label = QtWidgets.QLabel(self.global_widget)
+        Component_label.setText(&quot;微调框&quot;)
+
+        newComponent = QtWidgets.QSpinBox(self.global_widget)
+        newComponent.setMinimum(0)
+        newComponent.setMaximum(100)
+        newComponent.setValue(1)
+
+        self.add_layout(Component_label, newComponent)
+
+    def add_ComboBox(self):
+        Component_label = QtWidgets.QLabel(self.global_widget)
+        Component_label.setText(&quot;下拉框&quot;)
+        newComponent = QtWidgets.QComboBox(self.global_widget)
+        newComponent.addItems([&quot;选项1&quot;, &quot;选项2&quot;])
+        newComponent.addItem(&quot;选项3&quot;)
+        newComponent.addItem(QtGui.QIcon(&quot;help.png&quot;), &quot;选项4&quot;)
+        newComponent.setCurrentIndex(1)
+
+        self.add_layout(Component_label, newComponent)
+
+    def add_Slider(self):
+        Component_label = QtWidgets.QLabel(self.global_widget)
+        Component_label.setText(&quot;滑动条&quot;)
+        newComponent = QtWidgets.QSlider(self.global_widget)
+        newComponent.setMinimum(1)
+        newComponent.setMaximum(100)
+        newComponent.setValue(50)
+        newComponent.setOrientation(QtCore.Qt.Horizontal)
+
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(newComponent.sizePolicy().hasHeightForWidth())
+        newComponent.setSizePolicy(sizePolicy)
+
+        self.add_layout(Component_label, newComponent)
+
+    def add_CheckBox(self):
+        Component_label = QtWidgets.QLabel(self.global_widget)
+        Component_label.setText(&quot;复选框&quot;)
+        newComponent = QtWidgets.QCheckBox(self.global_widget)
+        newComponent.setChecked(True)
+
+        self.add_layout(Component_label, newComponent)
+
+        Component_label = QtWidgets.QLabel(self.global_widget)
+        Component_label.setText(&quot;三态复选框&quot;)
+        newComponent = QtWidgets.QCheckBox(self.global_widget)
+        newComponent.setTristate(True)
+        newComponent.setCheckState(QtCore.Qt.PartiallyChecked)
+
+        self.add_layout(Component_label, newComponent)
+
+    def add_layout(self, Component_label, Component):
+        horizontalLayout = QtWidgets.QHBoxLayout()
+        horizontalLayout.addWidget(Component_label)
+        horizontalLayout.addWidget(Component)
+
+        self.global_layout.addLayout(horizontalLayout)
+
+    def setGlobalUI(self):
+        self.global_group = QtWidgets.QGroupBox(self)
+        self.global_widget = QtWidgets.QWidget(self.global_group)
+        self.global_layout = QtWidgets.QVBoxLayout(self.global_widget)
+
+        self.global_group.setGeometry(QtCore.QRect(10, 40, 360, 350))
+        self.global_group.setTitle(&quot;全局&quot;)
+
+        self.global_widget.setGeometry(QtCore.QRect(20, 20, 330, 320))
+
+        self.global_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.add_SpinBox()
+        self.add_ComboBox()
+        self.add_Slider()
+        self.add_CheckBox()
+
+    def setHeaderUI(self):
+        help_button = QtWidgets.QToolButton(self)
+        help_button.setGeometry(QtCore.QRect(320, 7, 30, 31))
+        help_button.setIcon(QtGui.QIcon(&quot;help.png&quot;))
+
+        Component_label = QtWidgets.QLabel(self)
+        Component_label.setGeometry(QtCore.QRect(20, 7, 100, 30))
+        Component_label.setFrameStyle(QtWidgets.QFrame.Panel | QtWidgets.QFrame.Sunken)
+        Component_label.setText(&quot;右下对齐&quot;)
+        Component_label.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+
+    def setBottomUI(self):
+        default_para = QtWidgets.QPushButton(self)
+        default_para.setGeometry(QtCore.QRect(10, 400, 91, 23))
+        default_para.setText(&quot;恢复默认参数&quot;)
+
+        progressBar = QtWidgets.QProgressBar(self)
+        progressBar.setGeometry(QtCore.QRect(10, 430, 350, 23))
+        progressBar.setValue(10)
+        progressBar.setStyleSheet(
+            &quot;QProgressBar { border: 2px solid grey; border-radius: 5px; color: rgb(20,20,20);  background-color: #FFFFFF; text-align: center;}QProgressBar::chunk {background-color: rgb(100,200,200); border-radius: 10px; margin: 0.1px;  width: 1px;}&quot;)
+
+
+if __name__ == '__main__':
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
+
+    sys.exit(app.exec_())
+</code></pre>
+<p><img src="https://wjcsw.github.io/post-images/1687684410796.png" alt="完整用例" loading="lazy"><br>
+这里将上述的控件都使用上，通过从初始化函数的调用，添加各个控件，在主线程中启动Qt程序并显示。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] 从FBX文件中读取数据]]></title>
+        <id>https://wjcsw.github.io/yUgU6O2CS/</id>
+        <link href="https://wjcsw.github.io/yUgU6O2CS/">
+        </link>
+        <updated>2023-06-18T09:31:42.000Z</updated>
+        <content type="html"><![CDATA[<p>本篇博客是对应于上一篇博客：<a href="https://wjcsw.github.io/Jdib0wfCY/">Python下自定义数据导出为FBX</a>，这篇博客主要介绍如何将FBX模型中的UV数据提取出来。</p>
+<h2 id="1-初始化fbx设置">1. 初始化FBX设置</h2>
+<p>首先要做的就是是创建FBX SDK管理器，它几乎是所有FBX SDK中的类的对象分配器。</p>
+<p>接着，创建FBX IO设置，并为FBX SDK管理器设置IO设置。</p>
+<p>然后，创建一个空白的场景，用于读入数据。</p>
+<pre><code class="language-python">lSdkManager = FbxManager.Create()
+if not lSdkManager:
+    sys.exit(0)
+
+ios = FbxIOSettings.Create(lSdkManager, IOSROOT)
+lSdkManager.SetIOSettings(ios)
+
+lScene = FbxScene.Create(lSdkManager, &quot;&quot;)
+</code></pre>
+<h2 id="2-导入模型">2. 导入模型</h2>
+<p>导入模型时，先创建<code>FbxImporter</code>并初始化，<code>Initialize</code> 方法的第一个参数是导入文件保存路径，第二个参数表示导入的FBX文件类型，这里1代表为ASCii码格式。然后，调用该对象的<code>Import</code>方法将fbx模型导入到当前的场景，最后使用<code>GetRootNode</code>获取场景的根节点。</p>
+<pre><code class="language-python">def import_scene(fbxManager, fbxScene, fbxFilePath):
+    lImporter = FbxImporter.Create(fbxManager, &quot;&quot;)
+    result = lImporter.Initialize(fbxFilePath, 1, fbxManager.GetIOSettings())
+    if not result:
+        return False
+
+    result = lImporter.Import(fbxScene)
+    lImporter.Destroy()
+
+    fbxIOSettings = FbxIOSettings.Create(fbxManager, IOSROOT)
+    fbxManager.SetIOSettings(fbxIOSettings)
+
+    if not result:
+        raise IOError(&quot;load file [{}] failed&quot;.format(fbxFilePath))
+    fbxRootNode = fbxScene.GetRootNode()
+
+    return fbxRootNode, fbxIOSettings
+</code></pre>
+<h2 id="3-读入模型uv数据">3. 读入模型UV数据</h2>
+<h3 id="31-读入mesh数据">3.1 读入mesh数据</h3>
+<p>首先，通过<code>GetChild(i)</code>遍历获取fbx文件中的每个模型，然后调用<code>GetMesh</code>获取每个模型的mesh数据。</p>
+<p>下一步，使用 <code>GetControlPoints() </code>方法获取网格的控制点。然后，我们遍历控制点，并将每个控制点的坐标存储在 <code>vertices</code> 数组中。</p>
+<p>接下来，我们使用 <code>GetPolygonCount()</code> 方法获取网格的多边形数，并使用 <code>GetPolygonSize()</code> 和 <code>GetPolygonVertex()</code> 方法获取每个多边形的顶点索引，并将它们存储在 <code>faces</code> 数组中。</p>
+<p>最后，我们使用 <code>GetNormals()</code> 方法获取网格的法线数据，并将它们存储在 <code>normals</code> 数组中。</p>
+<pre><code class="language-python">for i in range(fbxRootNode.GetChildCount()):
+    fbxMesh = fbxRootNode.GetChild(i)
+    if fbxMesh is None:
+        raise RuntimeError(&quot;The node is null!&quot;)
+    fbxMeshName = fbxMesh.GetName()
+
+    mesh = fbxMesh.GetMesh()
+
+    # 提取顶点数据
+    vertices = []
+    control_points = mesh.GetControlPoints()
+    for i in range(mesh.GetControlPointsCount()):
+        vertices.append((control_points[i][0], control_points[i][1], control_points[i][2]))
+
+    # 提取面数据
+    faces = []
+    polygon_count = mesh.GetPolygonCount()
+    for i in range(polygon_count):
+        polygon_size = mesh.GetPolygonSize(i)
+        for j in range(polygon_size):
+            faces.append(mesh.GetPolygonVertex(i, j))
+
+    # 提取法线数据
+    normals = []
+    layer_element_normal = mesh.GetLayer(0).GetNormals()
+    if layer_element_normal:
+        for i in range(mesh.GetPolygonCount() * 3):
+            normal = layer_element_normal.GetDirectArray().GetAt(i)
+            normals.append((normal[0], normal[1], normal[2]))
+</code></pre>
+<h3 id="32-读入uv数据">3.2 读入UV数据</h3>
+<p>对于UV数据，直接调用<code>GetElementUV</code>方法即可获取对应名称的UV数据</p>
+<p>然后用<code>UVValue</code>存放UV中的顶点数据，用<code>UVIndex</code>存放面中的顶点序号数组，用<code>UVCount</code>存放每个面的顶点数目。</p>
+<p>通过UV数据的<code>GetDirectArray()</code>可以访问其顶点数组，通过<code>GetIndexArray()</code>可以访问面的顶点序号数组。<br>
+接着分别调用对应数组的<code>GetAt</code>方法获取对应的数据存入<code>UVValue</code>和<code>UVIndex</code>，最后使用<code>GetPolygonSize</code>方法获取每个面的大小存入<code>UVCount</code>中.</p>
+<pre><code class="language-python">    try:
+        # init output uv data
+        UVValue = []
+        UVIndex = []
+        UVCount = []
+        UVData = mesh.GetElementUV(&quot;map01&quot;)
+    
+        numVtx = UVData.GetDirectArray().GetCount()
+        numIndex = UVData.GetIndexArray().GetCount()
+
+        # separate uv data: value, index, count
+        for i in range(numVtx):
+            UVValue.append(UVData.GetDirectArray().GetAt(i)[0])
+            UVValue.append(UVData.GetDirectArray().GetAt(i)[1])
+        for j in range(numIndex):
+            UVIndex.append(UVData.GetIndexArray().GetAt(j))
+        for k in range(mesh.GetPolygonCount()):
+            UVCount.append(mesh.GetPolygonSize(k))
+
+    except Exception as e:
+        runtime_msg.popup_msgbox(info_loader.return_tips_msg(plugin_msg_code.PLUGIN_E_WRITE_UV))
+        raise e
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] 性能分析--cProfile]]></title>
+        <id>https://wjcsw.github.io/python-zhong-de-xing-neng-fen-xi-nei-zhi-de-cprofile/</id>
+        <link href="https://wjcsw.github.io/python-zhong-de-xing-neng-fen-xi-nei-zhi-de-cprofile/">
+        </link>
+        <updated>2023-06-13T08:57:28.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-什么是性能分析">1. 什么是性能分析</h2>
+<p>没有优化过的程序通常会在某些子程序（subroutine）上消耗大部分的CPU指令周期（CPU cycle）。性能分析就是分析代码和它正在使用的资源之间有着怎样的关系。例如，性能分析可以告诉你一个指令占用了多少CPU时间，或者整个程序消耗了多少内存。性能分析是通过使用一种被称为性能分析器（profiler）的工具，对程序或者二进制可执行文件（如果可以拿到）的源代码进行调整来完成的。</p>
+<p>通常，当需要优化程序性能，或者程序遇到了一些奇怪的bug时（一般与内存泄漏有关），开发者会对他们的程序进行性能分析。这时，性能分析可以帮助开发者深刻地了解程序是如何使用计算机资源的（即可以细致到一个函数被调用了多少次）。</p>
+<p>根据这些信息，以及对源代码的深刻认知，开发者就可以找到程序的性能瓶颈或者内存泄漏所在，然后修复错误的代码。</p>
+<p>程序性能分析的作用主要有以下几个方面：</p>
+<ul>
+<li>
+<p>发现性能瓶颈：通过性能分析，可以找到程序中的性能瓶颈，即程序中执行时间最长的部分，从而可以有针对性地进行优化，提高程序的执行效率。</p>
+</li>
+<li>
+<p>评估程序性能：通过性能分析，可以对程序的性能进行评估，了解程序的执行效率和资源占用情况，从而可以对程序进行优化和改进。</p>
+</li>
+<li>
+<p>比较不同实现方案的性能：通过性能分析，可以比较不同实现方案的性能，从而可以选择最优的实现方案，提高程序的执行效率。</p>
+</li>
+<li>
+<p>预测程序的性能：通过性能分析，可以预测程序在不同的环境下的性能表现，从而可以提前发现问题并进行优化。</p>
+</li>
+<li>
+<p>优化程序性能：通过性能分析，可以找到程序中的性能瓶颈，并进行优化，从而提高程序的执行效率，减少资源占用，提高用户体验。</p>
+</li>
+</ul>
+<p>帮助我们进行性能分析的工具便是性能分析器，它主要分为两类：</p>
+<ol>
+<li>基于事件的性能分析(event-based profiling)</li>
+<li>统计式的性能分析(statistical profiling)</li>
+</ol>
+<h3 id="11-基于事件的性能分析">1.1 基于事件的性能分析</h3>
+<p>不是所有的编程语言都支持这类性能分析。支持这类基于事件的性能分析的编程语言主要有以下几种。</p>
+<ul>
+<li>
+<p>Java：JVMTI（JVM Tools Interface，JVM工具接口）为性能分析器提供了钩子，可以跟踪诸如函数调用、线程相关的事件、类加载之类的事件。</p>
+</li>
+<li>
+<p>.NET：和Java一样，.NET运行时提供了事件跟踪功能。</p>
+</li>
+<li>
+<p>Python： 开发者可以用sys.setprofile函数，跟踪python_[call|return|exception]或c_[ call | return | exception ] 之类的事件。</p>
+</li>
+</ul>
+<p><strong>基于事件的性能分析器</strong>（event-based profiler，也称为<strong>轨迹性能分析器</strong>，tracing profiler）是通过收集程序执行过程中的具体事件进行工作的。这些性能分析器会产生大量的数据。基本上，它们需要监听的事件越多，产生的数据量就越大。这导致它们不太实用，在开始对程序进行性能分析时也不是首选。但是，当其他性能分析方法不够用或者不够精确时，它们可以作为最后的选择。如果你想分析程序中所有返回语句的性能，那么这类性能分析器就可以为你提供完成任务应该有的颗粒度，而其他性能分析器都不能为你提供如此细致的结果。</p>
+<h3 id="12-统计式性能分析">1.2 统计式性能分析</h3>
+<p><strong>统计式性能分析器</strong>以固定的时间间隔对程序计数器（program counter）进行<strong>抽样统计</strong>。这样做可以让开发者掌握目标程序在每个函数上消耗的时间。由于它对程序计数器进行抽样，所以数据结果是<strong>对真实值的统计近似</strong>。不过，这类软件足以窥见被分析程序的性能细节，查出性能瓶颈之所在。</p>
+<p>这类性能分析软件的优点如下所示。</p>
+<ul>
+<li>
+<p><strong>分析的数据更少</strong>：由于我们只对程序执行过程进行抽样，而不用保留每一条数据，因此需要分析的信息量会显著减少。</p>
+</li>
+<li>
+<p><strong>对性能造成的影响更小</strong>：由于使用抽样的方式（用操作系统中断），目标程序的性能遭受的干扰更小。虽然使用性能分析器并不能做到100%无干扰，但是统计式性能分析器比基于事件的性能分析器造成的干扰要小。</p>
+</li>
+</ul>
+<p>在Python中最常用的性能分析工具主要有：<code>cProfiler</code>, <code>line_profiler</code>以及<code>memory_profiler</code> 等。他们以不同的方式帮助我们分析Python代码的性能。这里主要关注Python内置的<code>cProfiler</code>。</p>
+<h2 id="2-一个简单的例子">2. 一个简单的例子</h2>
+<p>以官方文档的一个简单例子来介绍该模块，通过简单的几行代码就可以对程序进行性能分析。</p>
+<pre><code class="language-python">import cProfile
+import re
+cProfile.run('re.compile(&quot;foo|bar&quot;)')
+</code></pre>
+<p>分析结果：</p>
+<pre><code>197 function calls (192 primitive calls) in 0.002 seconds
+Ordered by: standard name
+ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    1    0.000    0.000    0.001    0.001 &lt;string&gt;:1(&lt;module&gt;)
+    1    0.000    0.000    0.001    0.001 re.py:212(compile)
+    1    0.000    0.000    0.001    0.001 re.py:268(_compile)
+    1    0.000    0.000    0.000    0.000 sre_compile.py:172(_compile_charset)
+    1    0.000    0.000    0.000    0.000 sre_compile.py:201(_optimize_charset)
+    4    0.000    0.000    0.000    0.000 sre_compile.py:25    (_identityfunction)
+3/1    0.000    0.000    0.000    0.000 sre_compile.py:33(_compile)
+</code></pre>
+<p>从分析报告结果中我们可以得到很多信息，包含了程序中的函数调用次数、总时间、平均时间、累计时间等。具体解释如下：</p>
+<ol>
+<li>总共有197个函数调用，其中有192个是原始函数调用（primitive calls）。</li>
+<li>程序总共执行了0.002秒。</li>
+<li>按照函数名的字母顺序排序，显示了每个函数的调用次数、总时间、平均时间、累计时间等信息。
+<ul>
+<li>第一列<strong>ncalls</strong>表示函数调用次数。</li>
+<li>第二列<strong>tottime</strong>表示函数总共执行的时间，不包括子函数的执行时间。</li>
+<li>第三列<strong>percall</strong>表示函数平均执行时间，等于tottime/ncalls。</li>
+<li>第四列<strong>cumtime</strong>表示函数总共执行的时间，包括子函数的执行时间。</li>
+<li>第五列<strong>percall</strong>表示函数平均执行时间，等于cumtime/ncalls。</li>
+<li>最后一列<strong>filename</strong>:<strong>lineno</strong>(<strong>function</strong>)表示函数所在的文件名、行号和函数名。</li>
+</ul>
+</li>
+</ol>
+<p>从这个性能分析结果可以看出，程序中最耗时的函数是<code>re.py</code>中的<code>compile</code>函数，它被调用了1次，总共执行了0.001秒，占据了程序总共执行时间的一半以上。因此，如果要优化程序的性能，就需要重点关注这个函数，找出其中的性能瓶颈并进行优化。</p>
+<h2 id="3-进阶分析">3. 进阶分析</h2>
+<p>Python进行性能分析最主要使用两个类：<code>cProfile</code>模块的<code>Profile</code>类和<code>pstat</code>模块的<code>Stats</code>类。</p>
+<p>下面介绍下部分重要的函数</p>
+<p><strong>Profile类</strong><br>
+<code>cProfile</code>模块的<code>Profile</code>类主要用于收集分析数据和创建分析结果</p>
+<pre><code>enable(): 开始收集性能分析数据
+disable(): 停止收集性能分析数据
+create_stats(): 停止收集分析数据，并为已收集的数据创建stats对象
+print_stats(): 创建stats对象并打印分析结果
+dump_stats(filename): 把当前性能分析的结果写入文件(二进制格式)
+runcall(func, *args, **kwargs): 收集被调用函数func的性能分析数据
+</code></pre>
+<p><strong>Stats类</strong><br>
+<code>pstats</code>模块提供的Stats类可以帮助我们读取和操作stats文件（二进制格式）<br>
+<code>Stats类</code>可以接受stats文件名，也可以直接接受<code>cProfile.Profile</code>对象作为数据源。</p>
+<pre><code>strip_dirs(): 删除报告中所有函数文件名的路径信息
+dump_stats(filename): 把stats中的分析数据写入文件（效果同cProfile.Profile.dump_stats())
+sort_stats(*keys): 对报告列表进行排序，函数会依次按照传入的参数排序，关键词包括calls, cumtime等，具体参数参见https://docs.python.org/2/library/profile.html#pstats.Stats.sort_stats
+reverse_order(): 逆反当前的排序
+print_stats(*restrictions): 把信息打印到标准输出。*restrictions用于控制打印结果的形式, 例如(10, 1.0, &quot;.*.py.*&quot;)表示打印所有py文件的信息的前10行结果。
+</code></pre>
+<p>通过利用这两个类，可以更加自由地使用性能分析，可以针对某一部分代码使用性能分析，并使用Stats类进一步对分析结果进行整合和处理，下面给出一个使用的例子模板：</p>
+<pre><code class="language-python">import cProfile, pstats, io
+pr = cProfile.Profile()
+pr.enable()
+# ---- do something ----
+create_main_window()
+# ---- do something ----
+pr.disable()
+with open(&quot;time_cost.txt&quot;,&quot;w+&quot;) as f:
+    ps = pstats.Stats(pr, stream=f).sort_stats(2)
+    ps.print_stats()
+</code></pre>
+<p>将需要分析的代码放在<code>do something</code>的部分中，即可获得对该部分代码的性能分析。其中<code>sort_stats(2)</code>代表按照<strong>cumtime</strong>（累计时间）排序。</p>
+<h2 id="4-模块化封装">4. 模块化封装</h2>
+<p>在上面的基础上，我们已经可以很方便的进行性能分析。但是，每次使用时都要加上一大段代码，在测试完毕后再将其删除，显然是不够简洁和方便。因此，我们可以通过写一个<strong>带有参数的装饰器</strong>，这样想分析项目中任何一个函数，便可方便的使用装饰器来达到目的。</p>
+<pre><code class="language-python">import cProfile
+import pstats
+from functools import wraps
+import os
+
+def profile(sort_by='cumulative', lines=10, filename=None):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            PROF_FLAG = os.getenv(&quot;PROFILING&quot;)
+            if PROF_FLAG:
+                profiler = cProfile.Profile()
+                profiler.enable()
+                result = func(*args, **kwargs)
+                profiler.disable()
+                stats = pstats.Stats(profiler).sort_stats(sort_by)
+                stats.print_stats(lines)
+                if filename:
+                    stats.dump_stats(filename)
+                else:
+                    result = func(*args, **kwargs)
+            return result
+        return wrapper
+    return decorator
+</code></pre>
+<p>这个装饰器接受三个参数：<strong>sort_by、lines和filename</strong>。<strong>sort_by</strong>表示按照哪个指标进行排序，默认为'cumulative'，表示按照函数的累计时间进行排序；<strong>lines</strong>表示显示多少行结果，默认为10；<strong>filename</strong>表示将分析结果存储到哪个文件中，默认为None，表示不存储。</p>
+<p>使用方法如下：</p>
+<pre><code class="language-python">@profile(sort_by='cumulative', lines=20, filename='result.prof')
+def my_function():
+    # 函数代码
+
+# 调用函数时自动执行性能分析
+my_function()
+</code></pre>
+<p>装饰器函数中通过<code>sys.getenv</code>来获取环境变量判断是否需要进行分析，只需通过设置环境变量来告诉程序是否进行性能分析，当测试完毕后无需删除代码，只需更改环境变量即可。</p>
+<pre><code class="language-python">export PROFILING=y
+# run the program...
+</code></pre>
+<p>程序跑完后便会在当前路径下生成对应的分析文件，我们便可以通过打印或者可视化工具来对这个函数进行分析。</p>
+<h2 id="5-结果分析">5. 结果分析</h2>
+<p>按照上文的方法，我们通过装饰器对运行的函数进行修饰来进行性能分析，这样我们便可以像正常一样去跑程序，但是不同的是当前路径下会生成性能分析报告文件。</p>
+<p>生成的这个文件为.<strong>prof</strong>文件，它是一个二进制文件，一个简单的读取方式是用python的<code>pstats</code>模块的接口来读取。</p>
+<pre><code class="language-python">ps = pstats.Stats(&quot;filename&quot;).sort_stats(2)
+ps.print_stats()
+</code></pre>
+<p>但是，从这样的数据中继续分析下去显然是相当痛苦和反人类的，不过好在有着很多现成好用的可视化工具可以帮助我们继续分析下去，比如<strong>gprof2dot、vprof、pyflame</strong>等。这边主要下介绍<strong>gprof2dot</strong>，个人觉得是用起来最习惯的。其他两个只给出示例图和链接以供参考。</p>
+<h3 id="51-gprof2dot">5.1 gprof2dot</h3>
+<p>Gprof2Dot是一个Python脚本，可以可将多种Profiler的数据转换成Graphviz格式的图形化展示，方便用户进行性能分析和优化。</p>
+<p>下载安装及详细用法：https://github.com/jrfonseca/gprof2dot</p>
+<p>通过该脚本可以获得程序运行不同函数的时间分析图：</p>
+<pre><code>gprof2dot -f pstats filename.prof | dot -Tpng -o out.png
+</code></pre>
+<p>执行后就可以在同一路径下看到生成好的分析图 out.png<br>
+<img src="https://wjcsw.github.io/post-images/1686650618450.png" alt="" loading="lazy"></p>
+<h3 id="52-vprof">5.2 vprof</h3>
+<p>下载安装及详细用法：https://github.com/nvdv/vprof<br>
+<img src="https://wjcsw.github.io/post-images/1686650800347.gif" alt="" loading="lazy"></p>
+<h3 id="53-pyflame">5.3 pyflame</h3>
+<p>Pyflame是一个轻量级的Profiler工具，可以帮助用户分析Python程序的性能瓶颈，并可视化地显示函数调用关系和执行时间。Pyflame支持多种输出格式，包括FlameGraph、SVG等。</p>
+<p>下载安装及详细用法：https://github.com/uber-archive/pyflame<br>
+<img src="https://wjcsw.github.io/post-images/1686651425199.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] 自定义数据导出为FBX]]></title>
+        <id>https://wjcsw.github.io/Jdib0wfCY/</id>
+        <link href="https://wjcsw.github.io/Jdib0wfCY/">
+        </link>
+        <updated>2023-06-07T14:03:38.000Z</updated>
+        <content type="html"><![CDATA[<p>FBX是Autodesk公司开发的一种通用3D文件格式，可以在不同的3D软件之间进行交换和共享。FBX文件包含了3D模型的<strong>几何形状、材质、动画、灯光、相机和其他相关信息</strong>。</p>
+<p>如果想在当前流行的 3D 编辑器（如 Maya 和 3DS Max）与 3D 体验引擎（如 Unity、Unreal Engine）之间传输数据，则应使用 FBX 文件格式。这是这个文件格式主要的设计目的。</p>
+<p>关于FBX模型的更多详细信息，可以看我的另一篇博客：<a href="https://wjcsw.github.io/fbx-wen-jian-ge-shi-3d-jian-mo-he-you-xi-kai-fa-de-tong-yong-yu-yan-fbx-mo-xing-xiang-jie/">FBX文件格式：3D建模和游戏开发的通用语言----FBX模型详解</a></p>
+<p>本篇博客是基于上一篇博客：<a href="https://wjcsw.github.io/mRtdlAT6L/">从Max中读取模型数据</a>，介绍如何将获取到的数据转换为fbx模型导出。</p>
+<h2 id="1-初始化fbx设置">1. 初始化FBX设置</h2>
+<p>首先要做的就是是创建FBX SDK管理器，它几乎是所有FBX SDK中的类的对象分配器。</p>
+<p>接着，创建FBX IO设置，并为FBX SDK管理器设置IO设置。</p>
+<p>然后，创建一个空白的场景，用于写入数据。</p>
+<p>最后需要注意的是，由于FBX SDK默认的是Y轴向上，而3ds Max默认的是Z轴向上，因此需要进行利用<code>FbxAxisSystem</code>的<code>ConvertScene</code>进行轴转换。</p>
+<pre><code class="language-python">lSdkManager = FbxManager.Create()
+if not lSdkManager:
+    sys.exit(0)
+
+ios = FbxIOSettings.Create(lSdkManager, IOSROOT)
+lSdkManager.SetIOSettings(ios)
+
+lScene = FbxScene.Create(lSdkManager, &quot;&quot;)
+
+if lScene .GetGlobalSettings().GetSystemUnit() != fbx.FbxAxisSystem.eMayaZUp:
+    fbx.FbxAxisSystem.MayaZUp.ConvertScene(lScene)
+</code></pre>
+<h2 id="2-写入模型数据">2. 写入模型数据</h2>
+<p>我之前获取到的数据主要就是模型的<strong>mesh数据</strong>，<strong>UV数据</strong>以及<strong>变换属性</strong>。下面依次介绍如何将这些数据写入。</p>
+<h3 id="21-写入mesh数据">2.1 写入mesh数据</h3>
+<p>首先，创建一个新的<code>FbxMesh</code>用于写入。接着，调用<code>InitControlPoints</code>初始化控制点，然后将顶点数据写入控制点。</p>
+<p>下一步，先构造模型的材料属性并设置材料映射。接着，将面数据写入多边形中。<code>BeginPolygon</code>表示开始多边形构造， <code>AddPolygon</code>向多边形中添加顶点的ID, <code>EndPolygon</code>表示多边形构造结束。</p>
+<p>最后是写入法线数据。先构造模型的法线属性并设置法线的映射类型。接着，<br>
+通过<code>GetDirectArray</code>方法获取法线数组，接着调用<code>Add</code>写入法线数据。</p>
+<pre><code class="language-python">lMesh = fbx.FbxMesh.Create(fbxScene, &quot;&quot;)
+
+lMesh.InitControlPoints(len(vertices))
+
+for i, vertex in enumerate(vertices):
+    lMesh.SetControlPointAt(vertex, i)
+
+materialElement = lMesh.CreateElementMaterial()
+materialElement.SetMappingMode(fbx.FbxLayerElement.eByPolygon)
+materialElement.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+
+for i in range(len(faces)):
+    face = faces[i]
+    lMesh.BeginPolygon(material_ids[i])
+    for index in face:
+        Mesh.AddPolygon(index)
+    Mesh.EndPolygon()
+
+normalElement = lMesh.CreateElementNormal()
+normalElement.SetMappingMode(fbx.FbxLayerElement.eByPolygonVertex) 
+normalElement.SetReferenceMode(fbx.FbxLayerElement.eDirect) 
+
+for normal in normals:
+    normalElement.GetDirectArray().Add(normal)
+</code></pre>
+<h3 id="22-写入uv">2.2 写入UV</h3>
+<p>先构造模型的UV属性并设置UV映射，接着通过<code>GetDirectArray</code>方法获取UV顶点数组，然后调用<code>Add</code>写入UV的顶点数据。</p>
+<p>接下来，调用<code>GetIndexArray</code>获取面索引数组，然后调用<code>Add</code>写入UV的面的顶点索引数据。</p>
+<pre><code class="language-python">UVElement = lMesh.CreateElementUV(&quot;&quot;)
+UVElement.SetMappingMode(fbx.FbxLayerElement.eByPolygonVertex)
+UVElement.SetReferenceMode(fbx.FbxLayerElement.eIndexToDirect)
+
+for i in range(numVtx):
+    UVValue = fbx.FbxVector2(verts[i][0], verts[i][1])
+    UVElement.GetDirectArray().Add(UVValue)
+
+for i in range(numIndex):
+    UVIndex = faces[i]
+    for j in range(len(UVIndex)):
+        UVElement.GetIndexArray().Add(UVIndex[j] - 1)
+</code></pre>
+<h3 id="23-写入变换属性">2.3 写入变换属性</h3>
+<p>在写入变换属性之前，需要先在场景中构造一个节点<code>FbxNode</code>代表模型，并将刚刚写入的lMesh通过<code>SetNodeAttribute</code>方法赋予给这个节点。</p>
+<pre><code class="language-python">lNode = fbx.FbxNode.Create(lScene, &quot;&quot;)
+lNode.SetNodeAttribute(lMesh)
+</code></pre>
+<p>接着，就可以向这个节点设置变换属性了。直接使用节点的对应属性的<code>set</code>方法就可以完成。</p>
+<pre><code class="language-python">lNode.LclTranslation.Set(LclTranslation)
+lNode.LclRotation.Set(LclRotation)
+lNode.LclScaling.Set(LclScaling)
+
+lNode.GeometricTranslation.Set(GeometricTranslation)
+lNode.GeometricRotation.Set(GeometricRotation)
+lNode.GeometricScaling.Set(GeometricScaling)
+</code></pre>
+<h2 id="3-导出模型">3. 导出模型</h2>
+<p>导出模型时，需要将刚刚的那个节点放入场景中。先通过<code>GetRootNode</code>获取场景的根节点，然后使用<code>AddChild</code>将其加入根节点的孩子。</p>
+<p>最后，创建<code>FbxExporter</code>并初始化，<code>Initialize</code> 方法的第一个参数是导出文件保存路径，第二个参数表示导出的FBX文件类型，这里1代表为ASCii码格式。然后，调用该对象的<code>Export</code>方法将当前的场景导出为fbx模型。</p>
+<pre><code class="language-python">lRootNode = fbxScene.GetRootNode()
+lRootNode.AddChild(lNode)
+
+exporter = FbxExporter.Create(fbxManager, &quot;&quot;)
+exporter.Initialize(output_path, 1, fbxIOSettings)
+
+exporter.Export(fbxOutputScene)
+exporter.Destroy()
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] 从Max中读取模型数据]]></title>
+        <id>https://wjcsw.github.io/mRtdlAT6L/</id>
+        <link href="https://wjcsw.github.io/mRtdlAT6L/">
+        </link>
+        <updated>2023-06-06T07:44:57.000Z</updated>
+        <content type="html"><![CDATA[<p>3ds Max 和 Maya 是目前最常用的建模工具之一，最近在为项目开发需求时发现，这两者在导入导出时的设置有着不小的区别。</p>
+<p>最影响体验的就是，3ds Max在导入和导出模型时会阻塞当前max除了主窗口的所有窗口，而且速度上也不是很快，导出一个模型要卡好几秒，期间所有基于3ds Max的窗口都会被隐藏，对于插件设计来讲十分的致命。</p>
+<p>基于此，直接从Max中读取模型数据是一个更为理想的方法，下面就介绍下一些关键接口，不过在此之前我先记录一个Max导出设置的大坑。</p>
+<p>这里我获取数据的目的是为了从美术资产中提取出需要的部分数据并将其导出为一个新的fbx模型，因此对获取到的数据格式进行了向fbx的格式转换。如何将获取到的数据利用fbx sdk导出成新的模型，见我的另一篇博客：<a href="https://wjcsw.github.io/Jdib0wfCY/">使用fbx sdk将获取的数据转换为模型导出</a>。</p>
+<h2 id="1-多边形拆分问题">1. 多边形拆分问题</h2>
+<p>3ds Max 默认导出设置会将多边形都拆成三角面，导致模型在检测时出现问题，这一度让我觉得是不是Max本身的问题。</p>
+<p>最后发现是Max设置中有一个<strong>保留边缘方向(Preserve edge orientation)</strong>，默认是勾选上的，它会导致将多边形都拆成三角面，将其设为False就行了。<br>
+<img src="https://wjcsw.github.io/post-images/1686815514150.png" alt="" loading="lazy"></p>
+<h2 id="2-pymxs库">2. Pymxs库</h2>
+<p>最早的3ds Max中提供的Python API是<code>MaxPlus</code>库， 它只是对C++版本的sdk的一个缩减封装版，功能很少，也不太实用。调用它甚至不如直接使用MaxScript来的方便。</p>
+<p>从3ds Max 2017开始，它提供了一个全新的Python API，也就是<code>Pymxs</code>用于在3ds Max中执行MaxScript代码。它提供了一个Python接口，可以在Python脚本中调用MaxScript函数和命令，以及访问3ds Max中的对象和属性。使用pymxs库，可以将Python和MaxScript结合起来，实现更高效、更灵活的3D建模和动画制作。</p>
+<p>pymxs库的主要特点包括：</p>
+<ol>
+<li>
+<p>支持Python 2和Python 3。</p>
+</li>
+<li>
+<p>提供了完整的MaxScript函数和命令的Python接口。</p>
+</li>
+<li>
+<p>可以在Python脚本中访问3ds Max中的对象和属性，例如场景、节点、材质、动画等。</p>
+</li>
+<li>
+<p>支持Python和MaxScript之间的数据转换，例如将Python列表转换为MaxScript数组，将Python字典转换为MaxScript结构体等。</p>
+</li>
+<li>
+<p>可以在Python脚本中执行MaxScript代码，并获取执行结果。</p>
+</li>
+<li>
+<p>支持Python和MaxScript之间的交互式会话，可以在3ds Max中打开Python控制台，并在其中执行Python代码和MaxScript代码。</p>
+</li>
+</ol>
+<p>这边使用的就是基于Pymxs库来读取Max的数据。</p>
+<h2 id="3-获取模型数据">3. 获取模型数据</h2>
+<p>首先，必须要知道的一个重要常识是，3ds Max中的索引大部分都是从1开始的，与Python不同，使用时必须注意到这点去转换索引。</p>
+<h3 id="31-获取选择模型">3.1 获取选择模型</h3>
+<p>通过<code>getCurrentSelection</code>接口就可以直接获取到当前选择的模型节点集合</p>
+<p>后面通过遍历该集合中的节点node来操作来获取数据</p>
+<pre><code class="language-python"># 引入Max的python库
+from pymxs import runtime as rt
+# 引入fbx sdk
+import fbx
+
+exportList = rt.getCurrentSelection() # 获取当前所有选择的模型
+</code></pre>
+<p>由于模型类型poly和mesh类型的接口不一致，为了方便起见，可以通过类型判断，用一个变量统一地使用接口</p>
+<pre><code class="language-python">rt_convert = rt.polyop
+nodecls = rt.classOf(node)
+if str(nodecls) == &quot;Editable_mesh&quot;:
+    rt_convert = rt.meshop
+</code></pre>
+<h3 id="32-获取顶点">3.2 获取顶点</h3>
+<p>直接通过节点的属性就可以直接访问到模型的顶点数据，不过需要注意这里获取的verts的坐标在其pos属性中，顶点的三维坐标分别对应于pos属性中的x，y，z的值。</p>
+<pre><code class="language-python">maxmesh = node.mesh
+vertices = maxmesh.verts
+
+pMeshVerts = [fbx.FbxVector4(vertex.pos.x, vertex.pos.y, vertex.pos.z) for vertex in vertices]
+</code></pre>
+<h3 id="33-获取法线">3.3 获取法线</h3>
+<p>获取法线数据时，必须要注意，<strong>直接通过3ds Max提供的 <code>getNormal</code> 接口去获取，得到的法线数据是不正确的</strong>。<br>
+这里直接以Maxscript获取一个立方体的例子举例：<br>
+<img src="https://wjcsw.github.io/post-images/1686815455506.png" alt="" loading="lazy"></p>
+<pre><code>vertNum = box01.numverts
+8
+for i in 1 to vertNum do
+(
+	local vertNormal = getNormal box01.mesh i
+	print vertNormal
+)
+[0,0,-1.5708]
+[0,0,-1.5708]
+[0,0,-1.5708]
+[0,0,-1.5708]
+[0,0,1.5708]
+[0,0,1.5708]
+[0,0,1.5708]
+[0,0,1.5708]
+OK
+</code></pre>
+<p>通过<code>getNormal</code>方法获得的顶点法线数据是显然错误的，首先，8个点只有2种法线方向，然后，这个法线也没有归一化，长度并不是1的，所以这个获取的结果完全是没法用的。而且实际上，我们知道，一个顶点有可能不止一个法线方向的。事实上，这里按理说应该有24个法线。</p>
+<p>为了正确的获取法线，必须先为节点加入编辑法线的修改器，然后获取完删掉即可。</p>
+<pre><code class="language-python"># normals
+modN = node.modifiers[0]
+faceNum = modN.GetNumFaces()
+faceNormalIdList = [[modN.GetNormalID(i + 1, j + 1) for j in range(modN.GetFaceDegree(i + 1))] for i in
+                        range(faceNum)]
+
+infx = set([nidx for fn in faceNormalIdList for nidx in fn])
+temp = {}
+for ndx in infx:
+    n = modN.GetNormal(ndx)
+    temp[ndx] = fbx.FbxVector4(n[0], n[1], n[2])
+
+rt.deleteModifier(node, modN)
+normals = [temp[nidx] for fn in faceNormalIdList for nidx in fn]
+</code></pre>
+<p>这里，<code>modN.GetFaceDegree(i + 1)</code>的含义可以理解成这个面由多少个不同角度的点组成，然后遍历组成面的这些点，通过<code>GetNormalID</code>方法，获得组成这个面的顶点对应的normalId。</p>
+<p>接着通过normalId获取normal的值，这里<strong>使用集合是为了减少对重复的normalId进行接口调用，加快速度</strong>。</p>
+<h3 id="34-获取面">3.4 获取面</h3>
+<p>稍微注意下这里mesh和poly类型的接口使用的不同，一般而言，这两者的接口名称是相同的，但是这里不同。</p>
+<pre><code class="language-python"># faces
+pMeshFaces = []  
+face_mat_ids = []
+num_faces = rt_convert.getNumFaces(node)
+if rt_convert == rt.polyop:
+    for i in range(num_faces):
+        face = rt_convert.getFaceVerts(node, i + 1)
+        mat_id = rt_convert.getFaceMatID(node, i + 1)
+        Fa = [int(face[j] - 1) for j in range(len(face))]
+        pMeshFaces.append(Fa)
+        face_mat_ids.append(mat_id)
+else:
+    for i in range(num_faces):
+        face = rt.getFace(maxmesh, i + 1)
+        mat_id = rt.getFaceMatID(maxmesh, i + 1)
+        Fa = [int(face[j] - 1) for j in range(len(face))]
+        pMeshFaces.append(Fa)
+        face_mat_ids.append(mat_id)
+</code></pre>
+<h3 id="35-获取map">3.5 获取Map</h3>
+<p>首先通过<code>getNumMaps</code>获取该模型的通道数，然后遍历每个通道，通过<code>getMapVert</code>和<code>getMapFace</code>获取顶点和面数据。</p>
+<p><code>UVData</code>是我自定义的数据类型，用于保存这些数据。</p>
+<pre><code class="language-python">numMaps = rt_convert.getNumMaps(node)
+UVDatas = []
+for index in range(1, numMaps):
+    numFaces = rt_convert.getNumMapFaces(node, index)
+    numVerts = rt_convert.getNumMapVerts(node, index)
+    pMapVerts = []
+    for i in range(numVerts):
+        vert = rt_convert.getMapVert(node, index, i + 1)
+        pMapVerts.append(vert)
+
+    pMapFaces = []
+    for i in range(numFaces):
+        face = rt_convert.getMapFace(node, index, i + 1)
+        Fa = []
+        for j in range(len(face)):
+            Fa.append(int(face[j]))
+        pMapFaces.append(Fa)
+
+    uv_data = UVData(pMapVerts, pMapFaces, numVerts, numFaces, uv_name)
+    UVDatas.append(uv_data)
+
+</code></pre>
+<h3 id="36-获取变换属性">3.6 获取变换属性</h3>
+<p>通过node可以直接访问到模型的变换属性，分为局部变换和全局变换。主要包括三个属性：Translation 平移变换，Rotation 旋转变换以及Scaling 缩放变换。</p>
+<p>值得一提的是，直接从Max中读取得到的是四元数表示的角度，这里为了将其转换为Fbx的欧拉角度角度，做了两次转换。先将其转换为Fbx的四元数类型，再利用<code>FbxAMatrix</code>将其转换为欧拉角度。</p>
+<pre><code class="language-python"># 局部变换属性
+lclTranslation = fbx.FbxDouble3(node.pos.x, node.pos.y, node.pos.z)
+lclRotation = node.rotation
+lclRotation = fbx.FbxQuaternion(lclRotation.x, lclRotation.y, lclRotation.z, lclRotation.w)
+fbxMatrix = fbx.FbxAMatrix()
+fbxMatrix.SetQ(lclRotation)
+# 将FbxAMatrix转换为欧拉角度
+lclRotation = fbxMatrix.GetR()
+lclRotation = fbx.FbxDouble3(lclRotation[0], lclRotation[1], lclRotation[2])
+lclScaling = fbx.FbxDouble3(node.scale.x, node.scale.y, node.scale.z)
+    
+# 全局变换属性
+geometricTranslation = node.objectOffsetPos
+geometricTranslation = fbx.FbxDouble3(geometricTranslation.x, geometricTranslation.y, geometricTranslation.z)
+geometricRotation = node.objectOffsetRot
+geometricRotation = fbx.FbxQuaternion(geometricRotation.x, geometricRotation.y, geometricRotation.z,geometricRotation.w)
+fbxMatrix.SetQ(geometricRotation)
+geometricRotation = fbxMatrix.GetR()
+geometricRotation = fbx.FbxDouble3(geometricRotation[0], geometricRotation[1], geometricRotation[2])
+geometricScaling = node.objectOffsetScale
+geometricScaling = fbx.FbxDouble3(geometricScaling.x, geometricScaling.y, geometricScaling.z)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[[Python] FBX SDK：使用Python进行3D模型导入导出的设置]]></title>
+        <id>https://wjcsw.github.io/pIi1qYHnn/</id>
+        <link href="https://wjcsw.github.io/pIi1qYHnn/">
+        </link>
+        <updated>2023-06-05T14:10:22.000Z</updated>
+        <content type="html"><![CDATA[<p>FBX SDK 为FBX模型的导入导出提供了对应的<code>FbxImporter</code>和<code>FbxExporter</code>类</p>
+<p>这里介绍下如何使用这两个类进行导入与导出以及对应的导入导出设置</p>
+<h2 id="1-初始化">1. 初始化</h2>
+<p>使用FBX SDK，首先得对<code>FbxManager</code>对象初始化，用于管理FBX模型的几乎所有对象</p>
+<p>然后创建一个空白场景用于写入将要导入或导出的数据</p>
+<pre><code class="language-python">lSdkManager = FbxManager.Create()
+if not lSdkManager:
+    sys.exit(0)
+
+ios = FbxIOSettings.Create(lSdkManager, IOSROOT)
+pSdkManager.SetIOSettings(ios)
+
+pScene = FbxScene.Create(lSdkManager, &quot;&quot;)
+</code></pre>
+<h2 id="2-导入模型">2. 导入模型</h2>
+<p>FBX SDK通过<code>FbxImporter</code>类来完成导入模型。</p>
+<p>首先，创建导入器对象，接着调用其初始化方法完成导入的基本设置，该方法共有三个参数以及一个额外的可选参数：</p>
+<ul>
+<li>第一个参数指定要导入的FBX文件的路径和文件名。</li>
+<li>第二个参数指定要导入的FBX文件的格式，可以是二进制格式或ASCII格式。-1表示自动检测文件格式，0为二进制格式，1为ASCII格式。</li>
+<li>第三个参数为导入的<code>FbxIOSettings</code>对象，用于设置导入FBX文件的选项，例如是否导入材质、动画、几何体等。</li>
+<li>最后的可选参数指定一个文件流，表示用于读取FBX文件的数据流，可以是文件流或内存流。如果不指定文件流，则默认使用文件名和格式来创建一个文件流。</li>
+</ul>
+<p><code>FbxIOSettings</code>对象具体设置了对于导入FBX文件的选项，常见的导入设置如下所示，这里介绍下每个选项的含义：</p>
+<ul>
+<li>IMP_FBX_MATERIAL：设置是否导入FBX文件中的材质信息。</li>
+<li>IMP_FBX_TEXTURE：设置是否导入FBX文件中的纹理信息。</li>
+<li>IMP_FBX_SHAPE：设置是否导入FBX文件中的形状信息，例如几何体和曲线。</li>
+<li>IMP_FBX_GOBO：设置是否导入FBX文件中的灯光信息。</li>
+<li>IMP_FBX_ANIMATION：设置是否导入FBX文件中的动画信息。</li>
+<li>IMP_FBX_GLOBAL_SETTINGS：设置是否导入FBX文件中的全局设置信息，例如单位、坐标系和时间轴设置。</li>
+</ul>
+<p>这些选项可以根据需要进行设置，以便在导入FBX文件时只导入所需的信息，从而提高导入效率和减少内存占用。</p>
+<p>最后调用导入器对象的<code>Import</code>方法导入即可，记得导入完成后销毁导入器对象。</p>
+<pre><code class="language-python">def LoadScene(pSdkManager, pScene, pFileName):
+    lImporter = FbxImporter.Create(pSdkManager, &quot;&quot;)
+    result = lImporter.Initialize(pFileName, -1, pSdkManager.GetIOSettings())
+    if not result:
+        return False
+
+    if lImporter.IsFBX():
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_MATERIAL, True)
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_TEXTURE, True)
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_SHAPE, True)
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_GOBO, True)
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_ANIMATION, True)
+        pSdkManager.GetIOSettings().SetBoolProp(IMP_FBX_GLOBAL_SETTINGS, True)
+
+    result = lImporter.Import(pScene)
+    lImporter.Destroy()
+    return result
+</code></pre>
+<h2 id="3-导出模型">3. 导出模型</h2>
+<p>类似地，FBX SDK通过<code>FbxExporter</code>类来完成导入模型。</p>
+<p>导出的方法与导入的基本一致，只有IO设置中参数的前缀都要从IMP改为EXP</p>
+<p>最后调用导出器对象的<code>Export</code>方法导出即可，记得导入完成后销毁导出器对象。</p>
+<pre><code class="language-python">def export_scene(pSdkManager, pScene, pFileName):
+    lExporter = FbxExporter.Create(fbxManager, &quot;&quot;)
+
+    if not pSdkManager.GetIOSettings():
+        ios = FbxIOSettings.Create(pSdkManager, IOSROOT)
+        pSdkManager.SetIOSettings(ios)
+
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_MATERIAL, True)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_TEXTURE, True)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_EMBEDDED, False)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_SHAPE, True)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_GOBO, True)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_ANIMATION, True)
+    pSdkManager.GetIOSettings().SetBoolProp(EXP_FBX_GLOBAL_SETTINGS, True)
+
+    result = lExporter.Initialize(output_path, 1, pSdkManager.GetIOSettings())
+
+    if result:
+        result = lExporter.Export(pScene)
+    lExporter.Destroy()
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[FBX文件格式：3D建模和游戏开发的通用语言----FBX模型详解]]></title>
+        <id>https://wjcsw.github.io/fbx-wen-jian-ge-shi-3d-jian-mo-he-you-xi-kai-fa-de-tong-yong-yu-yan-fbx-mo-xing-xiang-jie/</id>
+        <link href="https://wjcsw.github.io/fbx-wen-jian-ge-shi-3d-jian-mo-he-you-xi-kai-fa-de-tong-yong-yu-yan-fbx-mo-xing-xiang-jie/">
+        </link>
+        <updated>2023-06-01T06:39:27.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="1-fbx概述">1. FBX概述</h2>
+<p>FBX是Autodesk公司开发的一种通用3D文件格式，可以在不同的3D软件之间进行交换和共享。FBX文件包含了3D模型的<strong>几何形状、材质、动画、灯光、相机和其他相关信息</strong>。</p>
+<p>如果想在当前流行的 3D 编辑器（如 Maya 和 3DS Max）与 3D 体验引擎（如 Unity、Unreal Engine）之间传输数据，则应使用 FBX 文件格式。这是这个文件格式主要的设计目的。</p>
+<h2 id="2-优缺点">2. 优缺点</h2>
+<p><strong>FBX模型具有以下几个方面的优势</strong>：</p>
+<blockquote>
+<p><strong>1. 跨平台兼容性</strong>：FBX文件可以在不同的3D软件之间进行交换和共享，包括Autodesk Maya、3ds Max、Blender、Unity、Unreal Engine等。这使得开发人员可以在不同的软件之间自由地转换和共享3D模型和场景。</p>
+</blockquote>
+<blockquote>
+<p><strong>2. 支持多种数据类型</strong>：FBX文件支持几何、材质、动画、灯光、相机等多种数据类型，可以完整地保存3D模型和场景的各个方面。这使得开发人员可以在不同的软件之间自由地转换和共享3D模型和场景。</p>
+</blockquote>
+<blockquote>
+<p><strong>3. 高效的数据压缩</strong>：FBX文件使用高效的数据压缩算法，可以将3D模型和场景的数据压缩到较小的文件大小。这使得开发人员可以更快地加载和处理3D模型和场景。</p>
+</blockquote>
+<blockquote>
+<p><strong>4. 支持多种操作</strong>：FBX文件支持多种操作，包括动画、物理模拟、碰撞检测等。这使得开发人员可以在不同的软件之间自由地转换和共享3D模型和场景，并进行各种操作。</p>
+</blockquote>
+<blockquote>
+<p><strong>5. 可扩展性</strong>：FBX文件是一种可扩展的文件格式，可以通过添加自定义属性和元数据来扩展其功能。这使得开发人员可以根据自己的需求来扩展FBX文件的功能。</p>
+</blockquote>
+<p><strong>FBX 格式的最大缺点</strong>: 它是一种封闭格式。访问 FBX 文件中数据的<strong>唯一官方方法</strong>是<strong>使用官方 SDK</strong>。</p>
+<h2 id="3-模型数据详解">3. 模型数据详解</h2>
+<p>FBX有<strong>二进制</strong>和<strong>ASCII码</strong>两种格式，在<strong>ASCII码</strong>格式下我们可以直接看到里面储存的数据。下面以一个简单的长方体模型为例，介绍模型的每项数据及其含义。<br>
+<img src="https://wjcsw.github.io/post-images/1686643620943.png" alt="" loading="lazy"></p>
+<h3 id="31-头部数据">3.1 头部数据</h3>
+<pre><code>; FBX 7.4.0 project file
+; ----------------------------------------------------
+
+FBXHeaderExtension:  {
+    FBXHeaderVersion: 1003
+    FBXVersion: 7400
+    CreationTimeStamp:  {
+        Version: 1000
+        Year: 2023
+        Month: 6
+        Day: 13
+        Hour: 14
+        Minute: 45
+        Second: 31
+        Millisecond: 644
+    }
+    Creator: &quot;FBX SDK/FBX Plugins version 2020.3.1&quot;
+    SceneInfo: &quot;SceneInfo::GlobalInfo&quot;, &quot;UserData&quot; {
+        Type: &quot;UserData&quot;
+        Version: 100
+        MetaData:  {
+            Version: 100
+            Title: &quot;&quot;
+            Subject: &quot;&quot;
+            Author: &quot;&quot;
+            Keywords: &quot;&quot;
+            Revision: &quot;&quot;
+            Comment: &quot;&quot;
+        }
+        Properties70:  {
+            P: &quot;DocumentUrl&quot;, &quot;KString&quot;, &quot;Url&quot;, &quot;&quot;, &quot;C:\Users\xxx\Desktop\tes.fbx&quot;
+            P: &quot;SrcDocumentUrl&quot;, &quot;KString&quot;, &quot;Url&quot;, &quot;&quot;, &quot;C:\Users\xxx\Desktop\tes.fbx&quot;
+            P: &quot;Original&quot;, &quot;Compound&quot;, &quot;&quot;, &quot;&quot;
+            P: &quot;Original|ApplicationVendor&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;Autodesk&quot;
+            P: &quot;Original|ApplicationName&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;3ds Max&quot;
+            P: &quot;Original|ApplicationVersion&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;2022&quot;
+            P: &quot;Original|DateTime_GMT&quot;, &quot;DateTime&quot;, &quot;&quot;, &quot;&quot;, &quot;13/06/2023 06:45:31.643&quot;
+            P: &quot;Original|FileName&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;C:\Users\xxx\Desktop\tes.fbx&quot;
+            P: &quot;LastSaved&quot;, &quot;Compound&quot;, &quot;&quot;, &quot;&quot;
+            P: &quot;LastSaved|ApplicationVendor&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;Autodesk&quot;
+            P: &quot;LastSaved|ApplicationName&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;3ds Max&quot;
+            P: &quot;LastSaved|ApplicationVersion&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;2022&quot;
+            P: &quot;LastSaved|DateTime_GMT&quot;, &quot;DateTime&quot;, &quot;&quot;, &quot;&quot;, &quot;13/06/2023 06:45:31.643&quot;
+            P: &quot;Original|ApplicationActiveProject&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;C:\Users\xxx\Documents\3ds Max 2022&quot;
+        }
+    }
+}
+</code></pre>
+<p>这是FBX文件的<strong>头部扩展数据</strong>，其中包含了以下信息：</p>
+<ul>
+<li><strong>FBXHeaderVersion</strong>: FBX文件头部版本号，这里是1003。</li>
+<li><strong>FBXVersion</strong>: FBX文件版本号，这里是7400。</li>
+<li><strong>CreationTimeStamp</strong>: FBX文件创建时间戳，包括年、月、日、时、分、秒和毫秒。</li>
+<li><strong>Creator</strong>: 创建FBX文件的软件和插件版本号。</li>
+<li><strong>SceneInfo</strong>: 场景信息，包括全局信息和用户数据。</li>
+<li><strong>Type</strong>: 用户数据类型，这里是&quot;UserData&quot;。</li>
+<li><strong>Version</strong>: 用户数据版本号，这里是100。</li>
+<li><strong>MetaData</strong>: 用户数据的元数据，包括标题、主题、作者、关键字、修订版本和注释。</li>
+<li><strong>Properties70</strong>: 用户数据的属性，包括文档URL、源文档URL、原始应用程序供应商、原始应用程序名称、原始应用程序版本、原始日期时间、原始文件名、最后保存的应用程序供应商、最后保存的应用程序名称、最后保存的应用程序版本、最后保存的日期时间和原始应用程序活动项目。</li>
+</ul>
+<p>这些数据提供了有关FBX文件的详细信息，包括文件版本、创建时间、创建者、场景信息和用户数据。它们可以帮助开发人员了解FBX文件的来源和属性，以便更好地处理和使用它们。</p>
+<h3 id="32-全局设置数据">3.2 全局设置数据</h3>
+<pre><code>GlobalSettings:  {
+    Version: 1000
+    Properties70:  {
+        P: &quot;UpAxis&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,2
+        P: &quot;UpAxisSign&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,1
+        P: &quot;FrontAxis&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,1
+        P: &quot;FrontAxisSign&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,-1
+        P: &quot;CoordAxis&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,0
+        P: &quot;CoordAxisSign&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,1
+        P: &quot;OriginalUpAxis&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,2
+        P: &quot;OriginalUpAxisSign&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,1
+        P: &quot;UnitScaleFactor&quot;, &quot;double&quot;, &quot;Number&quot;, &quot;&quot;,1
+        P: &quot;OriginalUnitScaleFactor&quot;, &quot;double&quot;, &quot;Number&quot;, &quot;&quot;,2.54
+        P: &quot;AmbientColor&quot;, &quot;ColorRGB&quot;, &quot;Color&quot;, &quot;&quot;,0,0,0
+        P: &quot;DefaultCamera&quot;, &quot;KString&quot;, &quot;&quot;, &quot;&quot;, &quot;Producer Perspective&quot;
+        P: &quot;TimeMode&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,6
+        P: &quot;TimeProtocol&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,2
+        P: &quot;SnapOnFrameMode&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,0
+        P: &quot;TimeSpanStart&quot;, &quot;KTime&quot;, &quot;Time&quot;, &quot;&quot;,0
+        P: &quot;TimeSpanStop&quot;, &quot;KTime&quot;, &quot;Time&quot;, &quot;&quot;,153953860000
+        P: &quot;CustomFrameRate&quot;, &quot;double&quot;, &quot;Number&quot;, &quot;&quot;,-1
+        P: &quot;TimeMarker&quot;, &quot;Compound&quot;, &quot;&quot;, &quot;&quot;
+        P: &quot;CurrentTimeMarker&quot;, &quot;int&quot;, &quot;Integer&quot;, &quot;&quot;,-1
+    }
+}
+</code></pre>
+<p>这是FBX文件的<strong>全局设置数据</strong>，其中包含了以下信息：</p>
+<ul>
+<li><strong>Version</strong>: 全局设置版本号，这里是1000。</li>
+<li><strong>Properties70</strong>: 全局设置的属性，部分类似属性如UpAxis和FrontAxis只介绍一个。
+<ul>
+<li><strong>UpAxis</strong>: 上轴属性，表示FBX文件中的上轴方向。这里的值为2，表示上轴方向为Z轴。</li>
+<li><strong>UpAxisSign</strong>: 上轴符号属性，表示FBX文件中的上轴方向的符号。这里的值为1，表示上轴方向为正方向。</li>
+<li><strong>CoordAxis</strong>: 坐标轴属性，表示FBX文件中的坐标轴方向。这里的值为0，表示坐标轴方向为X、Y、Z轴。</li>
+<li><strong>CoordAxisSign</strong>: 坐标轴符号属性，表示FBX文件中的坐标轴方向的符号。这里的值为1，表示坐标轴方向为正方向。</li>
+<li><strong>UnitScaleFactor</strong>: 单位比例因子属性，表示FBX文件中的单位比例因子。这里的值为1，表示FBX文件中的距离单位为厘米。</li>
+<li><strong>AmbientColor</strong>: 环境颜色属性，表示FBX文件中的环境光颜色。这里的值为0,0,0，表示环境光颜色为黑色。</li>
+<li><strong>DefaultCamera</strong>: 默认相机属性，表示FBX文件中的默认相机。这里的值为&quot;Producer Perspective&quot;，表示默认相机为FBX生产者透视相机。</li>
+<li><strong>TimeMode</strong>: 时间模式属性，表示FBX文件中的时间单位。这里的值为6，表示时间单位为帧。</li>
+<li><strong>TimeProtocol</strong>: 时间协议属性，表示FBX文件中的时间协议。这里的值为2，表示时间协议为NTSC。</li>
+<li><strong>SnapOnFrameMode</strong>: 帧捕捉模式属性，表示FBX文件中的帧捕捉模式。这里的值为0，表示帧捕捉模式为关闭。</li>
+<li><strong>TimeSpanStart</strong>: 时间跨度开始属性，表示FBX文件中的时间跨度开始时间。这里的值为0，表示时间跨度开始时间为0帧。</li>
+<li><strong>TimeSpanStop</strong>: 时间跨度结束属性，表示FBX文件中的时间跨度结束时间。这里的值为153953860000，表示时间跨度结束时间为153953860000帧。</li>
+<li><strong>CustomFrameRate</strong>: 自定义帧速率属性，表示FBX文件中的自定义帧速率。这里的值为-1，表示没有自定义帧速率。</li>
+<li><strong>TimeMarker</strong>: 时间标记属性，表示FBX文件中的时间标记。</li>
+</ul>
+</li>
+</ul>
+<p>这些数据提供了有关FBX文件的全局设置信息，包括坐标轴方向、单位比例因子、时间模式和时间跨度等。它们可以帮助开发人员了解FBX文件的坐标系、单位和时间轴设置，以便更好地处理和使用它们。例如，上轴和前轴属性可以告诉开发人员FBX文件的坐标系方向，单位比例因子可以告诉开发人员FBX文件中的距离单位，时间模式和时间跨度可以告诉开发人员FBX文件中的时间单位和时间范围。</p>
+<h3 id="33-对象动画层数据">3.3 对象动画层数据</h3>
+<pre><code>ObjectType: &quot;AnimationLayer&quot; {
+        Count: 1
+        PropertyTemplate: &quot;FbxAnimLayer&quot; {
+            Properties70:  {
+                P: &quot;Weight&quot;, &quot;Number&quot;, &quot;&quot;, &quot;A&quot;,100
+                P: &quot;Mute&quot;, &quot;bool&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;Solo&quot;, &quot;bool&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;Lock&quot;, &quot;bool&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;Color&quot;, &quot;ColorRGB&quot;, &quot;Color&quot;, &quot;&quot;,0.8,0.8,0.8
+                P: &quot;BlendMode&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;RotationAccumulationMode&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;ScaleAccumulationMode&quot;, &quot;enum&quot;, &quot;&quot;, &quot;&quot;,0
+                P: &quot;BlendModeBypass&quot;, &quot;ULongLong&quot;, &quot;&quot;, &quot;&quot;,0
+            }
+        }
+    }
+</code></pre>
+<p>这些是<strong>动画层对象类型的数据</strong>，包括权重、静音、独奏、锁定、颜色、混合模式、旋转累积模式、缩放累积模式和混合模式旁路等属性。以下是每个属性的解释：</p>
+<ul>
+<li><strong>Weight</strong>: 权重属性，表示动画层的权重。这里的值为100，表示动画层的权重为100%。</li>
+<li><strong>Mute</strong>: 静音属性，表示动画层是否静音。这里的值为0，表示动画层未静音。</li>
+<li><strong>Solo</strong>: 独奏属性，表示动画层是否独奏。这里的值为0，表示动画层未独奏。</li>
+<li><strong>Lock</strong>: 锁定属性，表示动画层是否锁定。这里的值为0，表示动画层未锁定。</li>
+<li><strong>Color</strong>: 颜色属性，表示动画层的颜色。这里的值为0.8,0.8,0.8，表示动画层的颜色为灰色。</li>
+<li><strong>BlendMode</strong>: 混合模式属性，表示动画层的混合模式。这里的值为0，表示动画层的混合模式为标准混合模式。</li>
+<li><strong>RotationAccumulationMode</strong>: 旋转累积模式属性，表示动画层的旋转累积模式。这里的值为0，表示动画层的旋转累积模式为相加。</li>
+<li><strong>ScaleAccumulationMode</strong>: 缩放累积模式属性，表示动画层的缩放累积模式。这里的值为0，表示动画层的缩放累积模式为相加。</li>
+<li><strong>BlendModeBypass</strong>: 混合模式旁路属性，表示动画层的混合模式旁路。这里的值为0，表示动画层的混合模式旁路为关闭。</li>
+</ul>
+<p>这些属性用于控制动画层的行为和外观。例如，权重属性可以控制动画层在混合动画时的权重，静音属性可以控制动画层是否播放声音，颜色属性可以控制动画层的颜色，混合模式属性可以控制动画层的混合模式等。这些属性可以帮助开发人员控制动画层的行为和外观，以便更好地实现动画效果。</p>
+<h3 id="34-对象几何数据">3.4 对象几何数据</h3>
+<pre><code>Geometry: 2544941990176, &quot;Geometry::&quot;, &quot;Mesh&quot; {
+        Properties70:  {
+            P: &quot;Color&quot;, &quot;ColorRGB&quot;, &quot;Color&quot;, &quot;&quot;,0.694117647058824,0.345098039215686,0.105882352941176
+        }
+        Vertices: *24 {
+            a: -5.73998689651489,-20.0938777923584,0,5.73998689651489,-20.0938777923584,0,-5.73998689651489,20.0938777923584,0,5.73998689651489,20.0938777923584,0,-5.73998689651489,-20.0938777923584,10.2069730758667,5.73998689651489,-20.0938777923584,10.2069730758667,-5.73998689651489,20.0938777923584,10.2069730758667,5.73998689651489,20.0938777923584,10.2069730758667
+        } 
+        PolygonVertexIndex: *24 {
+            a: 0,2,3,-2,4,5,7,-7,0,1,5,-5,1,3,7,-6,3,2,6,-8,2,0,4,-7
+        } 
+        Edges: *12 {
+            a: 0,1,2,3,4,5,6,7,9,11,13,17
+        } 
+        GeometryVersion: 124
+        LayerElementNormal: 0 {
+            Version: 102
+            Name: &quot;&quot;
+            MappingInformationType: &quot;ByPolygonVertex&quot;
+            ReferenceInformationType: &quot;Direct&quot;
+            Normals: *72 {
+                a: 0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,-1,0,0,-1,0,0,-1,0,0,-1,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0
+            } 
+            NormalsW: *24 {
+                a: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+            } 
+        }
+        LayerElementUV: 0 {
+            Version: 101
+            Name: &quot;UVChannel_1&quot;
+            MappingInformationType: &quot;ByPolygonVertex&quot;
+            ReferenceInformationType: &quot;IndexToDirect&quot;
+            UV: *48 {
+                a: 1,0,0,0,1,1,0,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1,0,0,1,0,0,1,1,1
+            } 
+            UVIndex: *24 {
+                a: 0,2,3,1,4,5,7,6,8,9,11,10,12,13,15,14,16,17,19,18,20,21,23,22
+            } 
+        }
+        Layer: 0 {
+            Version: 100
+            LayerElement:  {
+                Type: &quot;LayerElementNormal&quot;
+                TypedIndex: 0
+            }
+            LayerElement:  {
+                Type: &quot;LayerElementUV&quot;
+                TypedIndex: 0
+            }
+        }
+    }
+</code></pre>
+<p>这是FBX文件中的几何体对象类型数据，包括顶点、多边形顶点索引、边、法线、UV等属性。以下是每个属性的解释：</p>
+<ul>
+<li><strong>Vertices</strong>: 顶点属性，表示几何体的顶点坐标。这里的值为三维数据集的8个顶点（3个值代表一个顶点三维坐标）。</li>
+<li><strong>PolygonVertexIndex</strong>: 多边形顶点索引属性，表示几何体的多边形顶点索引。这里的值为24个多边形顶点索引。其中的负值代表多边形结束，每隔3个出现负值代表是个三角形面，每隔4个出现负值代表是四边形面。</li>
+<li><strong>Edges</strong>: 边属性，表示几何体的边。这里的值为12个边。</li>
+<li><strong>LayerElementNormal</strong>: 法线属性，表示几何体的法线。
+<ul>
+<li><strong>Normals</strong>：法线向量。这里的72是6个四边形的每个四边形顶点的24个法线（3个值代表一个法向量）。</li>
+<li><strong>NormalsW</strong>：法线权重。</li>
+</ul>
+</li>
+<li><strong>LayerElementUV</strong>: UV属性，表示几何体的UV坐标。
+<ul>
+<li><strong>Name</strong>: 名称属性，表示UV属性的名称。这里的值为&quot;UVChannel_1&quot;。</li>
+<li><strong>MappingInformationType</strong>: 映射信息类型属性，表示UV坐标的映射方式。这里的值为&quot;ByPolygonVertex&quot;，表示每个多边形顶点都有一个对应的UV坐标。</li>
+<li><strong>ReferenceInformationType</strong>: 引用信息类型属性，表示UV坐标的索引方式。这里的值为&quot;IndexToDirect&quot;，表示UV坐标使用索引方式。</li>
+<li><strong>UV</strong>: UV坐标属性，表示几何体的UV坐标。这里的值为24个多边形顶点的48个UV坐标（2个值代表一个顶点二维坐标）。</li>
+<li><strong>UVIndex</strong>: UV索引属性，表示几何体的UV坐标索引。这里的值为24个UV索引，与多边形顶点索引对应。</li>
+</ul>
+</li>
+<li><strong>Layer</strong>: 层属性，表示几何体的层。这里的值表示模型包含法线和UV的层。</li>
+</ul>
+<p>着重解释下部分重要属性：</p>
+<p>在FBX模型中，<strong>PolygonVertexIndex</strong>是一个数组，它存储了多边形的顶点索引。具体来说，它指定了每个多边形的顶点在顶点数组中的索引位置。例如，如果一个三角形有三个顶点，那么PolygonVertexIndex数组中将有三个值，分别表示这三个顶点在顶点数组中的索引位置。这个数组的作用是帮助3D渲染引擎正确地绘制多边形，因为它告诉引擎哪些顶点应该连接在一起形成多边形。</p>
+<p><strong>MappingInformationType</strong>属性表示UV坐标、法线等属性的映射方式。常见的属性值设置有以下几种：</p>
+<pre><code>&quot;ByControlPoint&quot;: 按控制点映射，即每个控制点都有一个对应的属性值。
+&quot;ByPolygonVertex&quot;: 按多边形顶点映射，即每个多边形顶点都有一个对应的属性值。
+&quot;ByPolygon&quot;: 按多边形映射，即每个多边形都有一个对应的属性值。
+&quot;ByEdge&quot;: 按边映射，即每个边都有一个对应的属性值。
+&quot;AllSame&quot;: 所有属性值相同。
+</code></pre>
+<p>其中，&quot;ByControlPoint&quot;和&quot;ByPolygonVertex&quot;是最常用的两种映射方式。&quot;ByControlPoint&quot;适用于需要对控制点进行操作的情况，如平滑法线计算；&quot;ByPolygonVertex&quot;适用于需要对多边形顶点进行操作的情况，如纹理映射。</p>
+<p><strong>ReferenceInformationType</strong>属性表示UV坐标、法线等属性的索引方式。常见的属性值设置有以下几种：</p>
+<pre><code>&quot;Direct&quot;: 直接索引，即每个属性值都直接存储在属性数组中。
+&quot;IndexToDirect&quot;: 索引到直接，即每个属性值都通过索引引用属性数组中的值。
+</code></pre>
+<p>其中，&quot;Direct&quot;适用于属性值数量较少的情况，可以直接存储在属性数组中；&quot;IndexToDirect&quot;适用于属性值数量较多的情况，可以通过索引引用属性数组中的值，节省存储空间。</p>
+<p>需要注意的是，不同的属性类型可能支持不同的ReferenceInformationType属性值。例如，<strong>法线属性只支持&quot;Direct&quot;索引方式</strong>，而UV属性通常使用&quot;IndexToDirect&quot;索引方式。</p>
+<h3 id="35-其他重要属性">3.5 其他重要属性</h3>
+<p>其余部分中也有着一些重要属性，下面简略介绍下：</p>
+<ul>
+<li><strong>Shading</strong>: 着色属性，表示模型对象的着色方式。这里的值为&quot;T&quot;，表示使用纹理着色。</li>
+<li><strong>Culling</strong>: 背面剔除属性，表示模型对象的背面剔除方式。这里的值为&quot;CullingOff&quot;，表示不进行背面剔除。</li>
+<li><strong>Lcl Translation</strong>：表示模型对象的平移属性。Lcl是Local的缩写，表示该属性是相对于模型对象的<strong>本地坐标系</strong>而言的。与之类似的还有<strong>Lcl Rotation、Lcl Scaling</strong>分别代表模型相对于本地坐标系的旋转和缩放属性。</li>
+<li><strong>Geometric Translation</strong>：表示整个场景或模型对象的平移属性，与Lcl Translation属性不同，它是相对于FBX文件的<strong>全局坐标系</strong>而言的。与之类似的还有<strong>Geometric Rotation、Geometric Scaling</strong>。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[3ds Max 以及 Maya 各版本与内置 python 解释器对应版本]]></title>
+        <id>https://wjcsw.github.io/3ds-max-yi-ji-maya-ge-ban-ben-yu-nei-zhi-python-jie-shi-qi-dui-ying-ban-ben/</id>
+        <link href="https://wjcsw.github.io/3ds-max-yi-ji-maya-ge-ban-ben-yu-nei-zhi-python-jie-shi-qi-dui-ying-ban-ben/">
+        </link>
+        <updated>2023-05-30T03:15:55.000Z</updated>
+        <content type="html"><![CDATA[<p>3ds Max 以及 Maya 在多个版本以前就提供了内置python以供调用，但是不同版本的客户端使用的python版本不同，这在我工作中也带来了不少麻烦，目前将这些版本的对应关系整理如下：</p>
+<h2 id="3ds-max">3ds Max</h2>
+<p>其中2021提供了双版本python，默认使用的是高版本的</p>
+<p>额外注意，3dsMax的python2使用的是自己编译的python版本，环境与标准python不一致，某些库需要安装cpython编译的特殊版本</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">max版本</th>
+<th style="text-align:center">python版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>2017</strong></td>
+<td style="text-align:center"><strong>2.7.6</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2018</strong></td>
+<td style="text-align:center"><strong>2.7.12</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2019</strong></td>
+<td style="text-align:center"><strong>2.7.12</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2020</strong></td>
+<td style="text-align:center"><strong>2.7.15</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2021</strong></td>
+<td style="text-align:center"><strong>3.7.6</strong> &amp;&amp; <strong>2.7.17</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2022</strong></td>
+<td style="text-align:center"><strong>3.7.12</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2023</strong></td>
+<td style="text-align:center"><strong>3.9.7</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2024</strong></td>
+<td style="text-align:center"><strong>3.10.8</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="maya">Maya</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">maya版本</th>
+<th style="text-align:center">python版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>2017</strong></td>
+<td style="text-align:center"><strong>2.7.11</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2018</strong></td>
+<td style="text-align:center"><strong>2.7.11</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2019</strong></td>
+<td style="text-align:center"><strong>2.7.11</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2020</strong></td>
+<td style="text-align:center"><strong>2.7.15</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2021</strong></td>
+<td style="text-align:center"><strong>3.7.6</strong> &amp;&amp; <strong>2.7.17</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2022</strong></td>
+<td style="text-align:center"><strong>3.7.7</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2023</strong></td>
+<td style="text-align:center"><strong>3.9.7</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2024</strong></td>
+<td style="text-align:center"><strong>3.10.8</strong></td>
+</tr>
+</tbody>
+</table>
+]]></content>
+    </entry>
+</feed>
